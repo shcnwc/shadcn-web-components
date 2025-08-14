@@ -6,6 +6,7 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
+		"generate": "node generate-wrappers.js",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -33,6 +34,14 @@
 	},
 	"dependencies": {
 		"@lucide/svelte": "^0.539.0",
-		"bits-ui": "^2.9.3"
+		"@tanstack/table-core": "^8.21.3",
+		"bits-ui": "^2.9.3",
+		"embla-carousel-svelte": "^8.6.0",
+		"formsnap": "^2.0.1",
+		"layerchart": "2.0.0-next.27",
+		"mode-watcher": "^1.1.0",
+		"paneforge": "^1.0.2",
+		"svelte-sonner": "^1.0.5",
+		"vaul-svelte": "^0.3.2"
 	}
 }

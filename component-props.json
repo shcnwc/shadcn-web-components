@@ -1,0 +1,566 @@
+{
+    "accordion": {
+        "class": {
+            "type": "String"
+        },
+        "type": {
+            "type": "String"
+        },
+        "collapsible": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "value": {
+            "type": "String"
+        }
+    },
+    "accordion-content": {
+        "class": {
+            "type": "String"
+        }
+    },
+    "accordion-item": {
+        "class": {
+            "type": "String"
+        },
+        "value": {
+            "type": "String"
+        },
+        "disabled": {
+            "type": "Boolean",
+            "reflect": true
+        }
+    },
+    "accordion-trigger": {
+        "class": {
+            "type": "String"
+        },
+        "disabled": {
+            "type": "Boolean",
+            "reflect": true
+        }
+    },
+    "avatar": {
+        "class": {
+            "type": "String"
+        }
+    },
+    "avatar-fallback": {
+        "class": {
+            "type": "String"
+        }
+    },
+    "avatar-image": {
+        "class": {
+            "type": "String"
+        },
+        "src": {
+            "type": "String"
+        },
+        "alt": {
+            "type": "String"
+        },
+        "referrerpolicy": {
+            "type": "String"
+        },
+        "crossorigin": {
+            "type": "String"
+        }
+    },
+    "badge": {
+        "class": {
+            "type": "String"
+        },
+        "variant": {
+            "type": "String"
+        }
+    },
+    "button": {
+        "variant": {
+            "type": "String"
+        },
+        "size": {
+            "type": "String"
+        },
+        "disabled": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "class": {
+            "type": "String"
+        },
+        "type": {
+            "type": "String"
+        },
+        "name": {
+            "type": "String"
+        },
+        "value": {
+            "type": "String"
+        },
+        "href": {
+            "type": "String"
+        },
+        "id": {
+            "type": "String"
+        },
+        "form": {
+            "type": "String"
+        },
+        "autofocus": {
+            "type": "Boolean",
+            "reflect": true
+        }
+    },
+    "checkbox": {
+        "class": {
+            "type": "String"
+        },
+        "checked": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "indeterminate": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "disabled": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "required": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "name": {
+            "type": "String"
+        },
+        "value": {
+            "type": "String"
+        },
+        "id": {
+            "type": "String"
+        }
+    },
+    "dialog-close": {
+        "class": {
+            "type": "String"
+        }
+    },
+    "dialog-content": {
+        "class": {
+            "type": "String"
+        },
+        "trapFocus": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "preventScroll": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "escapeKeydownBehavior": {
+            "type": "String"
+        },
+        "interactOutsideBehavior": {
+            "type": "String"
+        },
+        "forceMount": {
+            "type": "Boolean",
+            "reflect": true
+        }
+    },
+    "dialog-description": {
+        "class": {
+            "type": "String"
+        }
+    },
+    "dialog-overlay": {
+        "class": {
+            "type": "String"
+        },
+        "forceMount": {
+            "type": "Boolean",
+            "reflect": true
+        }
+    },
+    "dialog-title": {
+        "class": {
+            "type": "String"
+        },
+        "level": {
+            "type": "Number"
+        }
+    },
+    "dialog-trigger": {
+        "class": {
+            "type": "String"
+        },
+        "disabled": {
+            "type": "Boolean",
+            "reflect": true
+        }
+    },
+    "input": {
+        "class": {
+            "type": "String"
+        },
+        "type": {
+            "type": "String"
+        },
+        "value": {
+            "type": "String"
+        },
+        "placeholder": {
+            "type": "String"
+        },
+        "disabled": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "name": {
+            "type": "String"
+        },
+        "id": {
+            "type": "String"
+        },
+        "required": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "readonly": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "min": {
+            "type": "String"
+        },
+        "max": {
+            "type": "String"
+        },
+        "minlength": {
+            "type": "Number"
+        },
+        "maxlength": {
+            "type": "Number"
+        },
+        "step": {
+            "type": "String"
+        },
+        "pattern": {
+            "type": "String"
+        },
+        "multiple": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "accept": {
+            "type": "String"
+        },
+        "autocomplete": {
+            "type": "String"
+        },
+        "autofocus": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "checked": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "list": {
+            "type": "String"
+        },
+        "size": {
+            "type": "Number"
+        },
+        "inputmode": {
+            "type": "String"
+        },
+        "enterkeyhint": {
+            "type": "String"
+        }
+    },
+    "label": {
+        "class": {
+            "type": "String"
+        },
+        "for": {
+            "type": "String"
+        },
+        "id": {
+            "type": "String"
+        }
+    },
+    "popover-content": {
+        "class": {
+            "type": "String"
+        },
+        "side": {
+            "type": "String"
+        },
+        "align": {
+            "type": "String"
+        },
+        "sideOffset": {
+            "type": "Number"
+        },
+        "avoidCollisions": {
+            "type": "Boolean",
+            "reflect": true
+        }
+    },
+    "popover-trigger": {
+        "class": {
+            "type": "String"
+        },
+        "disabled": {
+            "type": "Boolean",
+            "reflect": true
+        }
+    },
+    "progress": {
+        "class": {
+            "type": "String"
+        },
+        "value": {
+            "type": "Number"
+        },
+        "max": {
+            "type": "Number"
+        }
+    },
+    "select-content": {
+        "class": {
+            "type": "String"
+        },
+        "position": {
+            "type": "String"
+        },
+        "side": {
+            "type": "String"
+        },
+        "align": {
+            "type": "String"
+        },
+        "sideOffset": {
+            "type": "Number"
+        },
+        "avoidCollisions": {
+            "type": "Boolean",
+            "reflect": true
+        }
+    },
+    "select-item": {
+        "class": {
+            "type": "String"
+        },
+        "disabled": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "value": {
+            "type": "String"
+        }
+    },
+    "select-trigger": {
+        "class": {
+            "type": "String"
+        },
+        "disabled": {
+            "type": "Boolean",
+            "reflect": true
+        }
+    },
+    "separator": {
+        "class": {
+            "type": "String"
+        },
+        "orientation": {
+            "type": "String"
+        },
+        "decorative": {
+            "type": "Boolean",
+            "reflect": true
+        }
+    },
+    "sidebar": {
+        "class": {
+            "type": "String"
+        },
+        "forceMount": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "side": {
+            "type": "String"
+        },
+        "align": {
+            "type": "String"
+        },
+        "sideOffset": {
+            "type": "Number"
+        },
+        "trapFocus": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "preventScroll": {
+            "type": "Boolean",
+            "reflect": true
+        }
+    },
+    "skeleton": {
+        "class": {
+            "type": "String"
+        }
+    },
+    "switch": {
+        "class": {
+            "type": "String"
+        },
+        "checked": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "disabled": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "required": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "name": {
+            "type": "String"
+        },
+        "value": {
+            "type": "String"
+        },
+        "id": {
+            "type": "String"
+        }
+    },
+    "tabs": {
+        "class": {
+            "type": "String"
+        },
+        "orientation": {
+            "type": "String"
+        },
+        "value": {
+            "type": "String"
+        }
+    },
+    "tabs-content": {
+        "class": {
+            "type": "String"
+        },
+        "value": {
+            "type": "String"
+        },
+        "forceMount": {
+            "type": "Boolean",
+            "reflect": true
+        }
+    },
+    "tabs-list": {
+        "class": {
+            "type": "String"
+        }
+    },
+    "tabs-trigger": {
+        "class": {
+            "type": "String"
+        },
+        "value": {
+            "type": "String"
+        },
+        "disabled": {
+            "type": "Boolean",
+            "reflect": true
+        }
+    },
+    "textarea": {
+        "class": {
+            "type": "String"
+        },
+        "value": {
+            "type": "String"
+        },
+        "placeholder": {
+            "type": "String"
+        },
+        "disabled": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "name": {
+            "type": "String"
+        },
+        "id": {
+            "type": "String"
+        },
+        "required": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "readonly": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "rows": {
+            "type": "Number"
+        },
+        "cols": {
+            "type": "Number"
+        },
+        "minlength": {
+            "type": "Number"
+        },
+        "maxlength": {
+            "type": "Number"
+        },
+        "wrap": {
+            "type": "String"
+        },
+        "autocomplete": {
+            "type": "String"
+        },
+        "autofocus": {
+            "type": "Boolean",
+            "reflect": true
+        }
+    },
+    "tooltip-content": {
+        "class": {
+            "type": "String"
+        },
+        "side": {
+            "type": "String"
+        },
+        "align": {
+            "type": "String"
+        },
+        "sideOffset": {
+            "type": "Number"
+        },
+        "avoidCollisions": {
+            "type": "Boolean",
+            "reflect": true
+        },
+        "forceMount": {
+            "type": "Boolean",
+            "reflect": true
+        }
+    },
+    "tooltip-trigger": {
+        "class": {
+            "type": "String"
+        },
+        "disabled": {
+            "type": "Boolean",
+            "reflect": true
+        }
+    }
+}

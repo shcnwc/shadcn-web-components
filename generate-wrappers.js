@@ -1,181 +1,186 @@
-// generate-wrappers.js
-const fs = require('fs').promises;
-const path = require('path');
+import { promises as fsp } from 'fs';
+import fs from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-// Paths
-const componentsDir = path.join(__dirname, 'src', 'shadcn-svelte', 'docs', 'src', 'lib', 'registry', 'ui');
-const outputDir = path.join(__dirname, 'src', 'lib');
-const viteConfigPath = path.join(__dirname, 'vite.config.js');
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const componentsDir = join(__dirname, 'src', 'shadcn-svelte', 'docs', 'src', 'lib', 'registry', 'ui');
+const utilsSrcPath = join(__dirname, 'src', 'shadcn-svelte', 'docs', 'src', 'lib', 'utils.ts');
+const utilsDestPath = join(__dirname, 'src', 'lib', 'utils.ts');
+const outputDir = join(__dirname, 'src', 'lib');
+const viteConfigPath = join(__dirname, 'vite.config.ts');
+const manifestPath = join(__dirname, 'component-props.json');
 
-// Helper to convert component name to kebab-case (e.g., DialogContent -> dialog-content)
-const toKebabCase = (str) => {
-  return str
-    .replace(/([A-Z])/g, '-$1')
-    .toLowerCase()
-    .replace(/^-/, '');
+const toKebabCase = (str) => str.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
+const toPascalCase = (str) => str.split('-').map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join('');
+
+const buildPropsLiteral = (entry) => {
+  const map = { String: 'String', Boolean: 'Boolean', Number: 'Number', Array: 'Array', Object: 'Object', string: 'String', boolean: 'Boolean', number: 'Number', array: 'Array', object: 'Object' };
+  const pairs = Object.entries(entry).map(([k, v]) => {
+    const t = map[v] || 'String';
+    return `${k}: { type: "${t}" }`;
+  });
+  return `{ ${pairs.join(', ')} }`;
 };
 
-// Helper to convert component name to PascalCase (e.g., dialog-content -> DialogContent)
-const toPascalCase = (str) => {
-  return str
-    .split('-')
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join('');
-};
-
-// Helper to generate wrapper .svelte content
-const generateWrapperContent = (componentName, importPath, isSubComponent = false, parentComponent = '') => {
-  const tagName = `shadcn-${toKebabCase(componentName)}`;
-  const importStatement = isSubComponent
-    ? `import { ${parentComponent} } from '../../shadcn-svelte/docs/src/lib/registry/ui/${parentComponent.toLowerCase()}';`
-    : `import * as ${componentName} from '../../shadcn-svelte/docs/src/lib/registry/ui/${componentName.toLowerCase()}';`;
-
-  // Minimal props to suppress $props() warnings
-  const props = isSubComponent
-    ? { class: { type: 'String', default: '' } } // Most sub-components use class
-    : componentName === 'Button'
-      ? {
-          variant: { type: 'String', default: 'default' },
-          size: { type: 'String', default: 'default' },
-          disabled: { type: 'Boolean', default: false }
-        }
-      : componentName === 'Dialog'
-        ? { open: { type: 'Boolean', default: false } }
-        : { class: { type: 'String', default: '' } }; // Fallback for other components
-
-  const propsString = JSON.stringify(props, null, 2).replace(/\n/g, '\n    ');
-
-  const componentAccess = isSubComponent ? `${parentComponent}.${componentName}` : `${componentName}.Root || ${componentName}`;
-
-  return `<svelte:options
-  customElement={{
-    tag: '${tagName}',
-    props: ${propsString}
-  }}
-/>
-
-<script>
-  ${importStatement}
-
-  ${Object.keys(props).map((prop) => `export let ${prop} = ${JSON.stringify(props[prop].default)};`).join('\n  ')}
-</script>
-
-<${componentAccess} ${Object.keys(props).map((prop) => `{${prop}}`).join(' ')} {...$$restProps}>
-  <slot />
-</${componentAccess}>
-`;
-};
-
-// Helper to generate index.js content
-const generateIndexContent = (componentName) => {
-  return `export { default as ${componentName} } from './${componentName}.svelte';`;
-};
-
-// Helper to update vite.config.js
-const updateViteConfig = async (components) => {
-  const viteConfigContent = await fs.readFile(viteConfigPath, 'utf8');
-  const entryStartMarker = 'entry: {';
-  const entryEndMarker = '},';
-  const entryStartIndex = viteConfigContent.indexOf(entryStartMarker) + entryStartMarker.length;
-  const entryEndIndex = viteConfigContent.indexOf(entryEndMarker, entryStartIndex);
-
-  const existingEntries = viteConfigContent
-    .slice(entryStartIndex, entryEndIndex)
-    .split('\n')
-    .map((line) => line.trim())
-    .filter((line) => line && !line.startsWith('//'));
-
-  const newEntries = [
-    `'shadcn-web-components': resolve(__dirname, 'src/index.js')`,
-    ...components.map(
-      ({ componentName, isSubComponent, parentComponent }) =>
-        `'${toKebabCase(isSubComponent ? `${parentComponent}-${componentName}` : componentName)}': resolve(__dirname, 'src/lib/${toKebabCase(
-          isSubComponent ? `${parentComponent.toLowerCase()}-${componentName.toLowerCase()}` : componentName.toLowerCase()
-        )}/index.js')`
-    )
-  ];
-
-  // Merge and deduplicate entries
-  const allEntries = [...new Set([...existingEntries, ...newEntries])].sort();
-  const updatedEntries = allEntries.join(',\n        ');
-
-  const updatedViteConfig = `${viteConfigContent.slice(0, entryStartIndex)}\n        ${updatedEntries}\n      ${viteConfigContent.slice(entryEndIndex)}`;
-
-  await fs.writeFile(viteConfigPath, updatedViteConfig);
-};
-
-// Main function to generate wrappers and update configs
-const generateWrappers = async () => {
+const generateIndexContent = async (componentPath, componentName, svelteFileName) => {
+  const originalIndexPath = join(componentPath, 'index.ts');
   try {
-    // Ensure output directory exists
-    await fs.mkdir(outputDir, { recursive: true });
-
-    // Read components directory
-    const componentFolders = await fs.readdir(componentsDir, { withFileTypes: true });
-
-    const components = [];
-
-    for (const folder of componentFolders) {
-      if (folder.isDirectory()) {
-        const componentPath = path.join(componentsDir, folder.name);
-        const files = await fs.readdir(componentPath, { withFileTypes: true });
-
-        // Check if it's a single-component folder (e.g., button.svelte)
-        const componentFile = files.find((f) => f.name === `${folder.name}.svelte`);
-        if (componentFile) {
-          components.push({
-            componentName: toPascalCase(folder.name),
-            importPath: folder.name,
-            isSubComponent: false
-          });
-        }
-
-        // Check for sub-components (e.g., dialog/dialog-content.svelte)
-        for (const file of files) {
-          if (file.isFile() && file.name.endsWith('.svelte') && file.name !== `${folder.name}.svelte`) {
-            const subComponentName = file.name.replace('.svelte', '');
-            components.push({
-              componentName: toPascalCase(subComponentName),
-              importPath: `${folder.name}/${subComponentName}`,
-              isSubComponent: true,
-              parentComponent: toPascalCase(folder.name)
-            });
-          }
-        }
-      }
-    }
-
-    // Generate wrapper files
-    for (const { componentName, importPath, isSubComponent, parentComponent } of components) {
-      const outputFolderName = toKebabCase(isSubComponent ? `${parentComponent.toLowerCase()}-${componentName.toLowerCase()}` : componentName.toLowerCase());
-      const outputFolder = path.join(outputDir, outputFolderName);
-      await fs.mkdir(outputFolder, { recursive: true });
-
-      // Write .svelte file
-      const wrapperContent = generateWrapperContent(componentName, importPath, isSubComponent, parentComponent);
-      await fs.writeFile(path.join(outputFolder, `${componentName}.svelte`), wrapperContent);
-
-      // Write index.js file
-      const indexContent = generateIndexContent(componentName);
-      await fs.writeFile(path.join(outputFolder, 'index.js'), indexContent);
-    }
-
-    // Update src/index.js
-    const indexContent = components
-      .map(({ componentName, isSubComponent, parentComponent }) =>
-        `export * from './lib/${toKebabCase(isSubComponent ? `${parentComponent.toLowerCase()}-${componentName.toLowerCase()}` : componentName.toLowerCase())}';`
-      )
-      .join('\n');
-    await fs.writeFile(path.join(__dirname, 'src', 'index.js'), indexContent);
-
-    // Update vite.config.js
-    await updateViteConfig(components);
-
-    console.log('Wrappers generated and vite.config.js updated successfully!');
-  } catch (error) {
-    console.error('Error generating wrappers:', error);
+    const originalContent = await fsp.readFile(originalIndexPath, 'utf8');
+    let updatedContent = originalContent;
+    updatedContent = updatedContent.replace(/from\s+["']\.\/([^"']+)\.svelte["']/g, "from './$1.svelte'");
+    updatedContent = updatedContent.replace(/from\s+["']\.\/([^"']+)["']/g, (m, p) => {
+      try {
+        const tsPath = join(componentPath, `${p}.ts`);
+        if (fs.existsSync(tsPath)) return `from './${p}.ts'`;
+      } catch {}
+      return m;
+    });
+    return updatedContent;
+  } catch {
+    return `export { default as ${componentName} } from './${svelteFileName}';`;
   }
 };
 
-// Run the script
+const updateViteConfig = async (components) => {
+  let content = await fsp.readFile(viteConfigPath, 'utf8');
+  const startMarker = 'entry: {';
+  const endMarker = '},';
+  const start = content.indexOf(startMarker);
+  if (start === -1) throw new Error('build.lib.entry start not found');
+  const absStart = start + startMarker.length;
+  const end = content.indexOf(endMarker, absStart);
+  if (end === -1) throw new Error('build.lib.entry end not found');
+  const entries = components.map(({ folderName, effectiveKebab }) => `'${effectiveKebab}': resolve(__dirname, 'src/lib/${folderName}/index.ts')`);
+  entries.push(`'shadcn-web-components': resolve(__dirname, 'src/index.js')`);
+  const newBlock = `\n ${entries.sort().join(',\n ')}\n `;
+  content = content.slice(0, absStart) + newBlock + content.slice(end);
+  await fsp.writeFile(viteConfigPath, content);
+};
+
+const generateWrappers = async () => {
+  try {
+    const manifestRaw = await fsp.readFile(manifestPath, 'utf8');
+    const manifest = JSON.parse(manifestRaw);
+    const allowedSet = new Set(Object.keys(manifest));
+
+    await fsp.rm(outputDir, { recursive: true, force: true });
+    await fsp.mkdir(outputDir, { recursive: true });
+    await fsp.copyFile(utilsSrcPath, utilsDestPath);
+
+    const componentFolders = await fsp.readdir(componentsDir, { withFileTypes: true });
+    const components = [];
+
+    for (const folder of componentFolders) {
+      if (!folder.isDirectory()) continue;
+      const folderKebab = toKebabCase(folder.name);
+      if (!allowedSet.has(folderKebab)) continue;
+
+      const componentPath = join(componentsDir, folder.name);
+      const files = await fsp.readdir(componentPath, { withFileTypes: true });
+      const componentFile = files.find((f) => f.isFile() && f.name === `${folder.name}.svelte`);
+      if (!componentFile) continue;
+
+      const folderName = toKebabCase(folder.name);
+      const componentName = toPascalCase(folder.name);
+      components.push({
+        componentName,
+        isSubComponent: false,
+        svelteFilePath: join(componentPath, componentFile.name),
+        folderName,
+        effectiveKebab: folderName,
+        svelteFileName: componentFile.name,
+        componentPath
+      });
+
+      for (const file of files) {
+        if (!file.isFile() || !file.name.endsWith('.svelte')) continue;
+        if (file.name === `${folder.name}.svelte`) continue;
+
+        const subRaw = file.name.replace('.svelte', '');
+        const parentLower = folder.name.toLowerCase();
+        const subLower = subRaw.toLowerCase();
+        let effectiveSub;
+        if (subLower.startsWith(parentLower)) {
+          const trimmed = subRaw.substring(parentLower.length).replace(/^[-]/, '');
+          effectiveSub = `${folder.name}-${trimmed}`;
+        } else {
+          effectiveSub = `${folder.name}-${subRaw}`;
+        }
+
+        const subKebab = toKebabCase(effectiveSub);
+        if (!allowedSet.has(subKebab)) continue;
+
+        components.push({
+          componentName: toPascalCase(effectiveSub),
+          isSubComponent: true,
+          parentComponent: toPascalCase(folder.name),
+          svelteFilePath: join(componentPath, file.name),
+          folderName: subKebab,
+          effectiveKebab: subKebab,
+          svelteFileName: file.name,
+          componentPath
+        });
+      }
+    }
+
+    for (const { componentName, svelteFilePath, folderName, effectiveKebab, svelteFileName, componentPath } of components) {
+      const outDir = join(outputDir, folderName);
+      await fsp.mkdir(outDir, { recursive: true });
+
+      const originalComponentPath = dirname(svelteFilePath);
+      const files = await fsp.readdir(originalComponentPath, { withFileTypes: true });
+      for (const f of files) {
+        if (!f.isFile()) continue;
+        await fsp.copyFile(join(originalComponentPath, f.name), join(outDir, f.name));
+      }
+
+      const outFiles = await fsp.readdir(outDir, { withFileTypes: true });
+      const manifestEntry = manifest[effectiveKebab] || {};
+      const propsLiteral = buildPropsLiteral(manifestEntry);
+      const optionsTag = `<svelte:options customElement={{ tag: "shadcn-${effectiveKebab}", props: ${propsLiteral} }} />\n\n`;
+
+      for (const f of outFiles) {
+        if (!f.isFile()) continue;
+        const p = join(outDir, f.name);
+        if (!(f.name.endsWith('.svelte') || f.name.endsWith('.ts'))) continue;
+        let content = await fsp.readFile(p, 'utf8');
+
+        content = content.replace(/from\s+["']\$lib\/utils.js["']/g, "from '../utils.ts'");
+        content = content.replace(/from\s+["'](\.\/[^"']+|\.\.\/[^"']+)["']/g, (m, rel) => {
+          try {
+            const tsPath = join(outDir, `${rel}.ts`);
+            if (fs.existsSync(tsPath)) return `from '${rel}.ts'`;
+            const sveltePath = join(outDir, `${rel}.svelte`);
+            if (fs.existsSync(sveltePath)) return `from '${rel}.svelte'`;
+            return m;
+          } catch { return m; }
+        });
+
+        if (f.name.endsWith('.svelte')) {
+          if (content.includes('<svelte:options customElement=')) {
+            content = content.replace(/<svelte:options\s+customElement=[^>]+>\s*<\/svelte:options>\s*|\s*<svelte:options\s+customElement=[^>]+\/>\s*/s, optionsTag);
+            if (!content.includes('<svelte:options')) content = optionsTag + content;
+          } else {
+            content = optionsTag + content;
+          }
+        }
+
+        await fsp.writeFile(p, content);
+      }
+
+      const indexContent = await generateIndexContent(componentPath, componentName, svelteFileName);
+      await fsp.writeFile(join(outDir, 'index.ts'), indexContent);
+    }
+
+    const indexJs = components.map(({ folderName }) => `export * from './lib/${folderName}';`).join('\n');
+    await fsp.writeFile(join(__dirname, 'src', 'index.js'), indexJs);
+
+    await updateViteConfig(components);
+    console.log('Wrappers generated and vite.config.ts updated successfully!');
+  } catch (e) {
+    console.error('Error generating wrappers:', e);
+  }
+};
+
 generateWrappers();
