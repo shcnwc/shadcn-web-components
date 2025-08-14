@@ -1,0 +1,3 @@
+[submodule "src/shadcn-svelte"]
+	path = src/shadcn-svelte
+	url = https://github.com/huntabyte/shadcn-svelte
