@@ -171,6 +171,8 @@ const generatePackageJson = async (componentName, manifestEntry) => {
     type: 'module',
     main: 'index.js',
     types: 'index.d.ts',
+    files: ['index.js', 'index.d.ts', 'html-data.json'],
+    sideEffects: false,
     dependencies: {},
     peerDependencies: {}
   };
