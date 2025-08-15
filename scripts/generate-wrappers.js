@@ -14,6 +14,7 @@ const utilsDestPath = join(__dirname, '..', 'src', 'lib', 'utils.ts');
 const outputDir = join(__dirname, '..', 'src', 'lib');
 const manifestPath = join(__dirname, '..', 'component-props.json');
 const htmlDataPath = join(__dirname, '..', 'src', 'html-data.json');
+const rootPackageDir = join(__dirname, '..', 'dist', 'shadcn-web-components');
 
 const toKebabCase = (str) => str.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
 const toPascalCase = (str) => str.split('-').map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join('');
@@ -35,18 +36,19 @@ const mapTs = (prop) => {
   return 'unknown';
 };
 
-const buildPropsLiteral = (entry) => {
+const buildPropsLiteral = (entry, hasChildren = false, hasRef = false) => {
   const map = { String: 'String', Boolean: 'Boolean', Number: 'Number', Array: 'Array', Object: 'Object', string: 'String', boolean: 'Boolean', number: 'Number', array: 'Array', object: 'Object', Date: 'Date', date: 'Date' };
   const pairs = Object.entries(entry).filter(([k, v]) => v && typeof v === 'object' && 'type' in v).map(([k, v]) => {
     const t = map[v.type] || 'String';
     return `${k}: { type: "${t}" }`;
   });
+  if (hasChildren) pairs.push('children: { type: "Object" }');
+  if (hasRef) pairs.push('ref: { type: "Object" }');
   return `{ ${pairs.join(', ')} }`;
 };
 
 const generateIndexContent = async (componentPath, componentName, svelteFileName, isDrawer = false) => {
   if (isDrawer) {
-    // Custom index.ts for drawer components to avoid unnecessary vaul-svelte imports
     const kebabName = toKebabCase(componentName);
     if (kebabName === 'drawer') {
       return `export { default as Drawer } from './drawer.svelte';`;
@@ -191,6 +193,19 @@ const generatePackageJson = async (componentName, manifestEntry) => {
   return pkg;
 };
 
+const generateRootPackageJson = async (components) => {
+  return {
+    name: '@shadcn-web-components/all',
+    type: 'module',
+    main: 'index.js',
+    types: 'types.d.ts',
+    files: ['index.js', 'index.js.map', 'types.d.ts', 'html-data.json'],
+    publishConfig: { access: 'public' },
+    sideEffects: false,
+    dependencies: Object.fromEntries(components.map(({ effectiveKebab }) => [`@shadcn-web-components/${effectiveKebab}`, '*']))
+  };
+};
+
 const generateViteConfig = (componentName, entryPath, outputDir) => ({
   plugins: [
     svelte({
@@ -323,7 +338,9 @@ const generateWrappers = async () => {
       }
       const outFiles = await fsp.readdir(outDir, { withFileTypes: true });
       const manifestEntry = manifest[effectiveKebab] || {};
-      const propsLiteral = buildPropsLiteral(manifestEntry);
+      const hasChildren = (await fsp.readFile(svelteFilePath, 'utf8')).includes('{@render children?.()}');
+      const hasRef = (await fsp.readFile(svelteFilePath, 'utf8')).includes('ref = $bindable');
+      const propsLiteral = buildPropsLiteral(manifestEntry, hasChildren, hasRef);
       const optionsTag = `<svelte:options customElement={{ tag: "shadcn-${effectiveKebab}", props: ${propsLiteral} }} />\n\n`;
       for (const f of outFiles) {
         if (!f.isFile() || !f.name.endsWith('.svelte')) continue;
@@ -369,22 +386,17 @@ const generateWrappers = async () => {
       await build({ configFile: false, ...viteConfig });
     }
 
+    await fsp.mkdir(rootPackageDir, { recursive: true });
     const indexJs = components.map(({ effectiveKebab }) => `export * from '@shadcn-web-components/${effectiveKebab}';`).join('\n');
-    await fsp.writeFile(join(__dirname, '..', 'index.js'), indexJs);
+    await fsp.writeFile(join(rootPackageDir, 'index.js'), indexJs);
     const allDts = allInterfaces.join('\n\n') + '\ndeclare global {\n  interface HTMLElementTagNameMap {\n' + allTagMaps.join('\n') + '\n  }\n}\n';
-    await fsp.writeFile(join(__dirname, '..', 'types.d.ts'), allDts);
-    const rootPkg = await fsp.readFile('package.json', 'utf8');
-    const rootJson = JSON.parse(rootPkg);
-    rootJson.name = '@shadcn-web-components/all';
-    rootJson.main = 'index.js';
-    rootJson.types = 'types.d.ts';
-    rootJson.files = ['index.js', 'index.js.map', 'types.d.ts', 'html-data.json'];
-    rootJson.publishConfig = { access: 'public' };
-    rootJson.sideEffects = false;
-    rootJson.dependencies = Object.fromEntries(components.map(({ effectiveKebab }) => [`@shadcn-web-components/${effectiveKebab}`, '*']));
-    await fsp.writeFile('package.json', JSON.stringify(rootJson, null, 2));
+    await fsp.writeFile(join(rootPackageDir, 'types.d.ts'), allDts);
+    await fsp.writeFile(
+      join(rootPackageDir, 'package.json'),
+      JSON.stringify(await generateRootPackageJson(components), null, 2)
+    );
     const htmlData = { version: 1.1, tags: htmlDataTags };
-    await fsp.writeFile(htmlDataPath, JSON.stringify(htmlData, null, 2), 'utf8');
+    await fsp.writeFile(join(__dirname, '..', 'dist', 'html-data.json'), JSON.stringify(htmlData, null, 2), 'utf8');
     console.log('Wrappers, types, and package.json files generated; individual components built; html-data.json updated.');
   } catch (e) {
     console.error('Error generating wrappers/types:', e);
