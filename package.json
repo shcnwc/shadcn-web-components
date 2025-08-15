@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
-    "generate": "node scripts/generate-wrappers.js",
+    "build": "node scripts/generate-wrappers.js",
     "postbuild": "node scripts/copy-types.js",
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo ''",
