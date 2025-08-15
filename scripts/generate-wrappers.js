@@ -2,17 +2,23 @@ import { promises as fsp } from 'fs';
 import fs from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { build } from 'vite';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
+import tailwindcss from '@tailwindcss/vite';
+import { visualizer } from 'rollup-plugin-visualizer';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const componentsDir = join(__dirname, '..', 'src', 'shadcn-svelte', 'docs', 'src', 'lib', 'registry', 'ui');
 const utilsSrcPath = join(__dirname, '..', 'src', 'shadcn-svelte', 'docs', 'src', 'lib', 'utils.ts');
 const utilsDestPath = join(__dirname, '..', 'src', 'lib', 'utils.ts');
 const outputDir = join(__dirname, '..', 'src', 'lib');
-const viteConfigPath = join(__dirname, '..', 'vite.config.ts');
 const manifestPath = join(__dirname, '..', 'component-props.json');
 const htmlDataPath = join(__dirname, '..', 'src', 'html-data.json');
+
 const toKebabCase = (str) => str.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
 const toPascalCase = (str) => str.split('-').map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join('');
 const toInterfaceName = (tag) => toPascalCase(tag.replace(/^shadcn-/, '')) + 'Attributes';
+
 const mapTs = (prop) => {
   if (!prop) return 'string';
   if (prop.tsType) return prop.tsType;
@@ -28,6 +34,7 @@ const mapTs = (prop) => {
   if (t === 'Object' || t === 'object') return 'Record<string, unknown>';
   return 'unknown';
 };
+
 const buildPropsLiteral = (entry) => {
   const map = { String: 'String', Boolean: 'Boolean', Number: 'Number', Array: 'Array', Object: 'Object', string: 'String', boolean: 'Boolean', number: 'Number', array: 'Array', object: 'Object', Date: 'Date', date: 'Date' };
   const pairs = Object.entries(entry).filter(([k, v]) => v && typeof v === 'object' && 'type' in v).map(([k, v]) => {
@@ -36,7 +43,34 @@ const buildPropsLiteral = (entry) => {
   });
   return `{ ${pairs.join(', ')} }`;
 };
-const generateIndexContent = async (componentPath, componentName, svelteFileName) => {
+
+const generateIndexContent = async (componentPath, componentName, svelteFileName, isDrawer = false) => {
+  if (isDrawer) {
+    // Custom index.ts for drawer components to avoid unnecessary vaul-svelte imports
+    const kebabName = toKebabCase(componentName);
+    if (kebabName === 'drawer') {
+      return `export { default as Drawer } from './drawer.svelte';`;
+    } else if (kebabName === 'drawer-nested') {
+      return `export { default as DrawerNestedRoot } from './drawer-nested.svelte';`;
+    } else if (kebabName === 'drawer-content') {
+      return `export { default as DrawerContent } from './drawer-content.svelte';`;
+    } else if (kebabName === 'drawer-description') {
+      return `export { default as DrawerDescription } from './drawer-description.svelte';`;
+    } else if (kebabName === 'drawer-overlay') {
+      return `export { default as DrawerOverlay } from './drawer-overlay.svelte';`;
+    } else if (kebabName === 'drawer-footer') {
+      return `export { default as DrawerFooter } from './drawer-footer.svelte';`;
+    } else if (kebabName === 'drawer-header') {
+      return `export { default as DrawerHeader } from './drawer-header.svelte';`;
+    } else if (kebabName === 'drawer-title') {
+      return `export { default as DrawerTitle } from './drawer-title.svelte';`;
+    } else if (kebabName === 'drawer-trigger') {
+      return `export { default as DrawerTrigger } from './drawer-trigger.svelte';`;
+    } else if (kebabName === 'drawer-close') {
+      return `export { default as DrawerClose } from './drawer-close.svelte';`;
+    }
+    return `export { Portal as DrawerPortal } from 'vaul-svelte';`;
+  }
   const originalIndexPath = join(componentPath, 'index.ts');
   try {
     const originalContent = await fsp.readFile(originalIndexPath, 'utf8');
@@ -54,30 +88,18 @@ const generateIndexContent = async (componentPath, componentName, svelteFileName
     return `export { default as ${componentName} } from './${svelteFileName}';`;
   }
 };
-const updateViteConfig = async (components) => {
-  let content = await fsp.readFile(viteConfigPath, 'utf8');
-  const startMarker = 'entry: {';
-  const endMarker = '},';
-  const start = content.indexOf(startMarker);
-  if (start === -1) throw new Error('build.lib.entry start not found');
-  const absStart = start + startMarker.length;
-  const end = content.indexOf(endMarker, absStart);
-  if (end === -1) throw new Error('build.lib.entry end not found');
-  const entries = components.map(({ folderName, effectiveKebab }) => `'${effectiveKebab}': resolve(__dirname, 'src/lib/${folderName}/index.ts')`);
-  entries.push(`'shadcn-web-components': resolve(__dirname, 'src/index.js')`);
-  const newBlock = `\n ${entries.sort().join(',\n ')}\n `;
-  content = content.slice(0, absStart) + newBlock + content.slice(end);
-  await fsp.writeFile(viteConfigPath, content);
-};
+
 const nativeBaseByKebab = new Map([
   ['button', 'HTMLElement'],
   ['input', 'HTMLElement'],
   ['textarea', 'HTMLElement']
 ]);
+
 const collectProps = (entry) =>
   Object.fromEntries(
     Object.entries(entry).filter(([_, v]) => v && typeof v === 'object' && 'type' in v)
   );
+
 const mergeCase = (baseProps, casePatch) => {
   const b = { ...baseProps };
   for (const [k, v] of Object.entries(casePatch || {})) {
@@ -85,8 +107,10 @@ const mergeCase = (baseProps, casePatch) => {
   }
   return b;
 };
+
 const ifaceName = (tag) => toPascalCase(tag.replace(/^shadcn-/, '')) + 'Attributes';
 const caseIfaceName = (tag, caseKey) => toPascalCase(tag.replace(/^shadcn-/, '')) + toPascalCase(String(caseKey)) + 'Attributes';
+
 const propsToFields = (props) =>
   Object.entries(props)
     .map(([name, def]) => {
@@ -95,6 +119,7 @@ const propsToFields = (props) =>
       return ` "${name}"${opt}: ${t};`;
     })
     .join('\n');
+
 const genDts = (tagName, manifestEntry, base = 'HTMLElement', events = []) => {
   const baseProps = collectProps(manifestEntry);
   const variants = manifestEntry.variants && typeof manifestEntry.variants === 'object' ? manifestEntry.variants : null;
@@ -134,6 +159,7 @@ declare global {
 }
 `;
 };
+
 const genHtmlDataEntry = (tagName, manifestEntry) => {
   const attributes = Object.entries(manifestEntry)
     .filter(([k, v]) => v && typeof v === 'object' && 'type' in v)
@@ -144,20 +170,17 @@ const genHtmlDataEntry = (tagName, manifestEntry) => {
     }));
   return { name: tagName, description: '', attributes };
 };
-const getVersion = async () => {
-  const shadcnPkg = await fsp.readFile('src/shadcn-svelte/package.json', 'utf8');
-  return JSON.parse(shadcnPkg).version || '0.0.1';
-};
+
 const generatePackageJson = async (componentName, manifestEntry) => {
   const pkg = {
     name: `@shadcn-web-components/${componentName}`,
     type: 'module',
     main: 'index.js',
     types: 'index.d.ts',
-    files: ['index.js', 'index.d.ts', 'html-data.json'],
+    files: ['index.js', 'index.js.map', 'index.d.ts', 'html-data.json'],
     publishConfig: { access: 'public' },
-    dependencies: {},
-    peerDependencies: {}
+    sideEffects: false,
+    dependencies: {}
   };
   if (manifestEntry?.dependencies) {
     pkg.dependencies = {
@@ -167,25 +190,84 @@ const generatePackageJson = async (componentName, manifestEntry) => {
   }
   return pkg;
 };
+
+const generateViteConfig = (componentName, entryPath, outputDir) => ({
+  plugins: [
+    svelte({
+      compilerOptions: {
+        customElement: true
+      },
+      include: [
+        'src/**/*.svelte',
+        'src/shadcn-svelte/docs/src/lib/registry/ui/**/*.svelte'
+      ],
+      exclude: [
+        'scripts/**/*',
+        'src/shadcn-svelte/apps/**/*',
+        'src/shadcn-svelte/docs/src/lib/registry/examples/**/*'
+      ]
+    }),
+    tailwindcss(),
+    visualizer({ filename: `dist/${componentName}-stats.html`, template: 'treemap' })
+  ],
+  resolve: {
+    alias: {
+      '$lib': join(__dirname, '..', 'src', 'shadcn-svelte', 'docs', 'src', 'lib')
+    }
+  },
+  build: {
+    lib: {
+      entry: entryPath,
+      name: componentName,
+      fileName: 'index',
+      formats: ['es']
+    },
+    outDir: join(outputDir, componentName),
+    sourcemap: true,
+    minify: 'esbuild',
+    treeshake: true,
+    rollupOptions: {
+      external: [],
+      inlineDynamicImports: true,
+      output: {
+        manualChunks: undefined,
+        chunkFileNames: () => {
+          throw new Error('No chunks should be generated');
+        }
+      }
+    }
+  }
+});
+
 const generateWrappers = async () => {
   try {
     const manifestRaw = await fsp.readFile(manifestPath, 'utf8');
     const manifest = JSON.parse(manifestRaw);
     const allowedSet = new Set(Object.keys(manifest));
+    console.log('Components in manifest:', [...allowedSet]);
     await fsp.rm(outputDir, { recursive: true, force: true });
     await fsp.mkdir(outputDir, { recursive: true });
     await fsp.copyFile(utilsSrcPath, utilsDestPath);
     const componentFolders = await fsp.readdir(componentsDir, { withFileTypes: true });
     const components = [];
     const htmlDataTags = [];
+    const allInterfaces = [];
+    const allTagMaps = [];
+
     for (const folder of componentFolders) {
       if (!folder.isDirectory()) continue;
       const folderKebab = toKebabCase(folder.name);
-      if (!allowedSet.has(folderKebab)) continue;
+      if (!allowedSet.has(folderKebab)) {
+        console.log(`Skipping component ${folderKebab}: not in component-props.json`);
+        continue;
+      }
       const componentPath = join(componentsDir, folder.name);
       const files = await fsp.readdir(componentPath, { withFileTypes: true });
       const componentFile = files.find((f) => f.isFile() && f.name === `${folder.name}.svelte`);
-      if (!componentFile) continue;
+      if (!componentFile) {
+        console.log(`Skipping component ${folderKebab}: no ${folder.name}.svelte file found`);
+        continue;
+      }
       const folderName = toKebabCase(folder.name);
       const componentName = toPascalCase(folder.name);
       components.push({
@@ -211,7 +293,10 @@ const generateWrappers = async () => {
           effectiveSub = `${folder.name}-${subRaw}`;
         }
         const subKebab = toKebabCase(effectiveSub);
-        if (!allowedSet.has(subKebab)) continue;
+        if (!allowedSet.has(subKebab)) {
+          console.log(`Skipping sub-component ${subKebab}: not in component-props.json`);
+          continue;
+        }
         components.push({
           componentName: toPascalCase(effectiveSub),
           isSubComponent: true,
@@ -224,6 +309,9 @@ const generateWrappers = async () => {
         });
       }
     }
+
+    console.log('Components to build:', components.map(c => c.effectiveKebab));
+
     for (const { componentName, svelteFilePath, folderName, effectiveKebab, svelteFileName, componentPath } of components) {
       const outDir = join(outputDir, folderName);
       await fsp.mkdir(outDir, { recursive: true });
@@ -238,9 +326,8 @@ const generateWrappers = async () => {
       const propsLiteral = buildPropsLiteral(manifestEntry);
       const optionsTag = `<svelte:options customElement={{ tag: "shadcn-${effectiveKebab}", props: ${propsLiteral} }} />\n\n`;
       for (const f of outFiles) {
-        if (!f.isFile()) continue;
+        if (!f.isFile() || !f.name.endsWith('.svelte')) continue;
         const p = join(outDir, f.name);
-        if (!(f.name.endsWith('.svelte') || f.name.endsWith('.ts'))) continue;
         let content = await fsp.readFile(p, 'utf8');
         content = content.replace(/from\s+["']\$lib\/utils.js["']/g, "from '../utils.ts'");
         content = content.replace(/from\s+["'](\.\/[^"']+|\.\.\/[^"']+)["']/g, (m, rel) => {
@@ -252,22 +339,22 @@ const generateWrappers = async () => {
             return m;
           } catch { return m; }
         });
-        if (f.name.endsWith('.svelte')) {
-          if (content.includes('<svelte:options customElement=')) {
-            content = content.replace(/<svelte:options\s+customElement=[^>]+>\s*<\/svelte:options>\s*|\s*<svelte:options\s+customElement=[^>]+\/>\s*/s, optionsTag);
-            if (!content.includes('<svelte:options')) content = optionsTag + content;
-          } else {
-            content = optionsTag + content;
-          }
+        if (content.includes('<svelte:options customElement=')) {
+          content = content.replace(/<svelte:options\s+customElement=[^>]+>\s*<\/svelte:options>\s*|\s*<svelte:options\s+customElement=[^>]+\/>\s*/s, optionsTag);
+        } else if (!content.includes('<svelte:options')) {
+          content = optionsTag + content;
         }
         await fsp.writeFile(p, content);
       }
-      const indexContent = await generateIndexContent(componentPath, componentName, svelteFileName);
+      const indexContent = await generateIndexContent(componentPath, componentName, svelteFileName, folderName.startsWith('drawer'));
       await fsp.writeFile(join(outDir, 'index.ts'), indexContent);
       const tagName = `shadcn-${effectiveKebab}`;
       const base = nativeBaseByKebab.get(effectiveKebab) || 'HTMLElement';
       const events = Array.isArray(manifestEntry.events) ? manifestEntry.events : [];
       const dtsContent = genDts(tagName, manifestEntry, base, events);
+      const dtsParts = dtsContent.split('declare global');
+      allInterfaces.push(dtsParts[0].trim());
+      allTagMaps.push(`    "${tagName}": ${base};`);
       await fsp.writeFile(join(outDir, 'index.d.ts'), dtsContent);
       const componentHtmlData = { version: 1.1, tags: [genHtmlDataEntry(tagName, manifestEntry)] };
       await fsp.writeFile(join(outDir, 'html-data.json'), JSON.stringify(componentHtmlData, null, 2));
@@ -276,23 +363,32 @@ const generateWrappers = async () => {
         JSON.stringify(await generatePackageJson(effectiveKebab, manifestEntry), null, 2)
       );
       htmlDataTags.push(genHtmlDataEntry(tagName, manifestEntry));
+
+      // Build the component individually
+      const viteConfig = generateViteConfig(effectiveKebab, join(outDir, 'index.ts'), join(__dirname, '..', 'dist'));
+      await build({ configFile: false, ...viteConfig });
     }
+
     const indexJs = components.map(({ effectiveKebab }) => `export * from '@shadcn-web-components/${effectiveKebab}';`).join('\n');
-    await fsp.writeFile(join(__dirname, 'src', 'index.js'), indexJs);
+    await fsp.writeFile(join(__dirname, '..', 'index.js'), indexJs);
+    const allDts = allInterfaces.join('\n\n') + '\ndeclare global {\n  interface HTMLElementTagNameMap {\n' + allTagMaps.join('\n') + '\n  }\n}\n';
+    await fsp.writeFile(join(__dirname, '..', 'types.d.ts'), allDts);
     const rootPkg = await fsp.readFile('package.json', 'utf8');
     const rootJson = JSON.parse(rootPkg);
     rootJson.name = '@shadcn-web-components/all';
-    rootJson.main = './dist/shadcn-web-components/index.js';
-    rootJson.files = ['dist'];
+    rootJson.main = 'index.js';
+    rootJson.types = 'types.d.ts';
+    rootJson.files = ['index.js', 'index.js.map', 'types.d.ts', 'html-data.json'];
     rootJson.publishConfig = { access: 'public' };
-    rootJson.dependencies = Object.fromEntries(components.map(({ effectiveKebab }) => [`@shadcn-web-components/${effectiveKebab}`, rootJson.version || '*']));
+    rootJson.sideEffects = false;
+    rootJson.dependencies = Object.fromEntries(components.map(({ effectiveKebab }) => [`@shadcn-web-components/${effectiveKebab}`, '*']));
     await fsp.writeFile('package.json', JSON.stringify(rootJson, null, 2));
-    await updateViteConfig(components);
     const htmlData = { version: 1.1, tags: htmlDataTags };
     await fsp.writeFile(htmlDataPath, JSON.stringify(htmlData, null, 2), 'utf8');
-    console.log('Wrappers, types, and package.json files generated; vite.config.ts and html-data.json updated.');
+    console.log('Wrappers, types, and package.json files generated; individual components built; html-data.json updated.');
   } catch (e) {
     console.error('Error generating wrappers/types:', e);
   }
 };
+
 generateWrappers();

@@ -25,3 +25,5 @@ vite.config.ts.timestamp-*
 src/shadcn-svelte
 dist
 .svelte-kit
+html-data.json
+src/html-data.json
