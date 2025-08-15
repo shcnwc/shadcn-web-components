@@ -1,0 +1,3447 @@
+{
+  "version": 1.1,
+  "tags": [
+    {
+      "name": "shadcn-accordion",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "type",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "\"single\" | \"multiple\""
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "loop",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "orientation",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "\"horizontal\" | \"vertical\""
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-accordion-content",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-accordion-item",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-accordion-trigger",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-alert",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "variant",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-alert-description",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-alert-title",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-aspect-ratio",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "ratio",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-avatar",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-avatar-fallback",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-avatar-image",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "src",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "alt",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "referrerpolicy",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "crossorigin",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-badge",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "variant",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-breadcrumb",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-breadcrumb-ellipsis",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-breadcrumb-item",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-breadcrumb-link",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "href",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-breadcrumb-list",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-breadcrumb-page",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-breadcrumb-separator",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-button",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "variant",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "\"default\" | \"destructive\" | \"secondary\" | \"ghost\" | \"link\""
+          }
+        },
+        {
+          "name": "size",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "\"default\" | \"sm\" | \"lg\" | \"icon\""
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "type",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "\"button\" | \"submit\" | \"reset\""
+          }
+        },
+        {
+          "name": "name",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "href",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "id",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "form",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "autofocus",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-calendar",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "Date | string"
+          }
+        },
+        {
+          "name": "placeholder",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "Date | string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "readonly",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "locale",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "weekdayFormat",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "\"narrow\" | \"short\" | \"long\""
+          }
+        },
+        {
+          "name": "multiple",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "numberOfMonths",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        },
+        {
+          "name": "pagedNavigation",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-card",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-card-content",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-card-description",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-card-footer",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-card-header",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-card-title",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-carousel",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "orientation",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "opts",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "Record<string, unknown>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-carousel-content",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-carousel-item",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-carousel-next",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-carousel-previous",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-checkbox",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "checked",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "indeterminate",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "required",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "name",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "id",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-collapsible",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "open",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-collapsible-content",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "forceMount",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-collapsible-trigger",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-command",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "loop",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "shouldFilter",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-command-dialog",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-command-empty",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-command-group",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "heading",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-command-input",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "placeholder",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-command-item",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "keywords",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "unknown[]"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-command-list",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-command-separator",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-command-shortcut",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-drawer",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "direction",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-drawer-close",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-drawer-content",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "trapFocus",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "preventScroll",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "escapeKeydownBehavior",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "interactOutsideBehavior",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "forceMount",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-drawer-description",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-drawer-footer",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-drawer-header",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-drawer-overlay",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "forceMount",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-drawer-title",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "level",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-drawer-trigger",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-input",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "type",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "placeholder",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "name",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "id",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "required",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "readonly",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "min",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "max",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "minlength",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        },
+        {
+          "name": "maxlength",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        },
+        {
+          "name": "step",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "pattern",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "multiple",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "accept",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "autocomplete",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "autofocus",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "checked",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "list",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "size",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        },
+        {
+          "name": "inputmode",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "enterkeyhint",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-input-otp",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "placeholder",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "maxlength",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-input-otp-group",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-input-otp-separator",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-input-otp-slot",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-label",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "for",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "id",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-menubar",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-menubar-checkbox-item",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "checked",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-menubar-content",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "side",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "align",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "sideOffset",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        },
+        {
+          "name": "forceMount",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-menubar-item",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-menubar-label",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-menubar-radio-item",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-menubar-separator",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-menubar-shortcut",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-menubar-sub-content",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "side",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "align",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "sideOffset",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        },
+        {
+          "name": "forceMount",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-menubar-sub-trigger",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-menubar-trigger",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-navigation-menu",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-navigation-menu-content",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "forceMount",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-navigation-menu-indicator",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-navigation-menu-item",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-navigation-menu-link",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "href",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-navigation-menu-list",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-navigation-menu-trigger",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-navigation-menu-viewport",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-pagination",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "count",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        },
+        {
+          "name": "page",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        },
+        {
+          "name": "perPage",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        },
+        {
+          "name": "siblingCount",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-pagination-content",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-pagination-ellipsis",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-pagination-item",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "page",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-pagination-link",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "href",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "page",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        },
+        {
+          "name": "isActive",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-progress",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        },
+        {
+          "name": "max",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-radio-group",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "required",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "orientation",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-radio-group-item",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "id",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-range-calendar",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "Record<string, unknown>"
+          }
+        },
+        {
+          "name": "placeholder",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "readonly",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "locale",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "weekdayFormat",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "numberOfMonths",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        },
+        {
+          "name": "pagedNavigation",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-scroll-area",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "orientation",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-separator",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "orientation",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "decorative",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "side",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "\"left\" | \"right\""
+          }
+        },
+        {
+          "name": "variant",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "\"inset\" | \"floating\" | \"sidebar\""
+          }
+        },
+        {
+          "name": "collapsible",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "\"offcanvas\" | \"icon\" | \"none\""
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-content",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-footer",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-group-action",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-group-content",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-group-label",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-group",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-header",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-inset",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-menu-action",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-menu-badge",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-menu-button",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "variant",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "size",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "tooltip",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "isActive",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-menu-item",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-menu-skeleton",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-menu-sub-button",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "size",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "isActive",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-menu-sub-item",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-menu-sub",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-menu",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-provider",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "defaultOpen",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-rail",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-separator",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-sidebar-trigger",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-skeleton",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-slider",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "unknown[]"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "max",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        },
+        {
+          "name": "min",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        },
+        {
+          "name": "step",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        },
+        {
+          "name": "orientation",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-switch",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "checked",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "required",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "name",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "id",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-table",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-table-body",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-table-caption",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-table-cell",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-table-footer",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-table-head",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-table-header",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-table-row",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-tabs",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "orientation",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "\"horizontal\" | \"vertical\""
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "activationMode",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "\"automatic\" | \"manual\""
+          }
+        },
+        {
+          "name": "loop",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-tabs-content",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "forceMount",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-tabs-list",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-tabs-trigger",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-textarea",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "placeholder",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "name",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "id",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "required",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "readonly",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "rows",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        },
+        {
+          "name": "cols",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        },
+        {
+          "name": "minlength",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        },
+        {
+          "name": "maxlength",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "number"
+          }
+        },
+        {
+          "name": "wrap",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "autocomplete",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "autofocus",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-toggle",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "pressed",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "variant",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "size",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-toggle-group",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "type",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "orientation",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "shadcn-toggle-group-item",
+      "description": "",
+      "attributes": [
+        {
+          "name": "class",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "value",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "variant",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        },
+        {
+          "name": "size",
+          "description": "",
+          "value": {
+            "kind": "type",
+            "type": "string"
+          }
+        }
+      ]
+    }
+  ]
+}
