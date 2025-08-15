@@ -10,14 +10,32 @@ const utilsDestPath = join(__dirname, 'src', 'lib', 'utils.ts');
 const outputDir = join(__dirname, 'src', 'lib');
 const viteConfigPath = join(__dirname, 'vite.config.ts');
 const manifestPath = join(__dirname, 'component-props.json');
+const htmlDataPath = join(__dirname, 'src', 'html-data.json');
 
 const toKebabCase = (str) => str.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
 const toPascalCase = (str) => str.split('-').map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join('');
+const toInterfaceName = (tag) => toPascalCase(tag.replace(/^shadcn-/, '')) + 'Attributes';
+
+const mapTs = (prop) => {
+  if (!prop) return 'string';
+  if (prop.tsType) return prop.tsType;
+  if (Array.isArray(prop.enum) && prop.enum.length) {
+    return prop.enum.map((v) => (typeof v === 'string' ? JSON.stringify(v) : String(v))).join(' | ');
+  }
+  const t = prop.type;
+  if (t === 'String' || t === 'string') return 'string';
+  if (t === 'Number' || t === 'number') return 'number';
+  if (t === 'Boolean' || t === 'boolean') return 'boolean';
+  if (t === 'Date' || t === 'date') return 'Date';
+  if (t === 'Array' || t === 'array') return 'unknown[]';
+  if (t === 'Object' || t === 'object') return 'Record<string, unknown>';
+  return 'unknown';
+};
 
 const buildPropsLiteral = (entry) => {
-  const map = { String: 'String', Boolean: 'Boolean', Number: 'Number', Array: 'Array', Object: 'Object', string: 'String', boolean: 'Boolean', number: 'Number', array: 'Array', object: 'Object' };
-  const pairs = Object.entries(entry).map(([k, v]) => {
-    const t = map[v] || 'String';
+  const map = { String: 'String', Boolean: 'Boolean', Number: 'Number', Array: 'Array', Object: 'Object', string: 'String', boolean: 'Boolean', number: 'Number', array: 'Array', object: 'Object', Date: 'Date', date: 'Date' };
+  const pairs = Object.entries(entry).filter(([k,v])=>v&&typeof v==='object'&&'type'in v).map(([k, v]) => {
+    const t = map[v.type] || 'String';
     return `${k}: { type: "${t}" }`;
   });
   return `{ ${pairs.join(', ')} }`;
@@ -58,6 +76,96 @@ const updateViteConfig = async (components) => {
   await fsp.writeFile(viteConfigPath, content);
 };
 
+const nativeBaseByKebab = new Map([
+  ['button', 'HTMLElement'],
+  ['input', 'HTMLElement'],
+  ['textarea', 'HTMLElement']
+]);
+
+const collectProps = (entry) =>
+  Object.fromEntries(
+    Object.entries(entry).filter(([_, v]) => v && typeof v === 'object' && 'type' in v)
+  );
+
+const mergeCase = (baseProps, casePatch) => {
+  const b = { ...baseProps };
+  for (const [k, v] of Object.entries(casePatch || {})) {
+    b[k] = { ...(b[k] || { type: 'String' }), ...v };
+  }
+  return b;
+};
+
+const ifaceName = (tag) => toPascalCase(tag.replace(/^shadcn-/, '')) + 'Attributes';
+const caseIfaceName = (tag, caseKey) => toPascalCase(tag.replace(/^shadcn-/, '')) + toPascalCase(String(caseKey)) + 'Attributes';
+
+const propsToFields = (props) =>
+  Object.entries(props)
+    .map(([name, def]) => {
+      const t = mapTs(def);
+      const opt = def.required ? '' : '?';
+      return `  "${name}"${opt}: ${t};`;
+    })
+    .join('\n');
+
+const genDts = (tagName, manifestEntry, base = 'HTMLElement', events = []) => {
+  const baseProps = collectProps(manifestEntry);
+  const variants = manifestEntry.variants && typeof manifestEntry.variants === 'object' ? manifestEntry.variants : null;
+
+  if (!variants) {
+    const I = ifaceName(tagName);
+    const fields = propsToFields(baseProps);
+    return `export interface ${I} {
+${fields}
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "${tagName}": ${base};
+  }
+}
+`;
+  }
+
+  const discr = variants.discriminant;
+  const cases = variants.cases || {};
+  const caseIfaces = [];
+  const caseNames = [];
+
+  for (const [caseKey, patch] of Object.entries(cases)) {
+    const merged = mergeCase(baseProps, patch);
+    if (!merged[discr]) merged[discr] = { tsType: JSON.stringify(caseKey), required: true, type: 'String' };
+    const Icase = caseIfaceName(tagName, caseKey);
+    caseIfaces.push(`export interface ${Icase} {
+${propsToFields(merged)}
+}`);
+    caseNames.push(Icase);
+  }
+
+  const I = ifaceName(tagName);
+
+  return `${caseIfaces.join('\n\n')}
+
+export type ${I} = ${caseNames.join(' | ')};
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "${tagName}": ${base};
+  }
+}
+`;
+};
+
+const genHtmlDataEntry = (tagName, manifestEntry) => {
+  const attributes = Object.entries(manifestEntry)
+    .filter(([k,v])=>v&&typeof v==='object'&&'type'in v)
+    .map(([name, def]) => ({
+      name,
+      description: '',
+      value: { kind: 'type', type: mapTs(def) }
+    }));
+  return { name: tagName, description: '', attributes };
+};
+
 const generateWrappers = async () => {
   try {
     const manifestRaw = await fsp.readFile(manifestPath, 'utf8');
@@ -70,6 +178,7 @@ const generateWrappers = async () => {
 
     const componentFolders = await fsp.readdir(componentsDir, { withFileTypes: true });
     const components = [];
+    const htmlDataTags = [];
 
     for (const folder of componentFolders) {
       if (!folder.isDirectory()) continue;
@@ -171,15 +280,27 @@ const generateWrappers = async () => {
 
       const indexContent = await generateIndexContent(componentPath, componentName, svelteFileName);
       await fsp.writeFile(join(outDir, 'index.ts'), indexContent);
+
+      const tagName = `shadcn-${effectiveKebab}`;
+      const base = nativeBaseByKebab.get(effectiveKebab) || 'HTMLElement';
+      const events = Array.isArray(manifestEntry.events) ? manifestEntry.events : [];
+      const dtsContent = genDts(tagName, manifestEntry, base, events);
+      await fsp.writeFile(join(outDir, 'index.d.ts'), dtsContent);
+
+      htmlDataTags.push(genHtmlDataEntry(tagName, manifestEntry));
     }
 
     const indexJs = components.map(({ folderName }) => `export * from './lib/${folderName}';`).join('\n');
     await fsp.writeFile(join(__dirname, 'src', 'index.js'), indexJs);
 
     await updateViteConfig(components);
-    console.log('Wrappers generated and vite.config.ts updated successfully!');
+
+    const htmlData = { version: 1.1, tags: htmlDataTags };
+    await fsp.writeFile(htmlDataPath, JSON.stringify(htmlData, null, 2), 'utf8');
+
+    console.log('Wrappers and types generated; vite.config.ts and html-data.json updated.');
   } catch (e) {
-    console.error('Error generating wrappers:', e);
+    console.error('Error generating wrappers/types:', e);
   }
 };
 
