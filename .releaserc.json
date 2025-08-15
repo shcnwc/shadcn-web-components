@@ -1,16 +1,36 @@
 {
   "branches": ["main"],
   "plugins": [
-    "@semantic-release/commit-analyzer",
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "releaseRules": [
+          { "type": "chore", "release": false },
+          { "message": "/shadcn-svelte/", "release": "patch" }
+        ]
+      }
+    ],
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "node scripts/set-versions.js ${nextRelease.version} && npm run build"
+      }
+    ],
+    [
+      "@semantic-release/exec",
+      {
+        "publishCmd": "node scripts/publish-sub.js"
+      }
+    ],
     "@semantic-release/npm",
     [
       "@semantic-release/git",
       {
         "assets": [
           "package.json",
-          "dist/*/package.json",
+          "src/lib/*/package.json",
           "CHANGELOG.md"
         ]
       }
