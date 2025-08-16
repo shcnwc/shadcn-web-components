@@ -15,8 +15,8 @@ const outputDir = join(__dirname, '..', 'src', 'lib');
 const manifestPath = join(__dirname, '..', 'component-props.json');
 const rootPackageDir = join(__dirname, '..', 'dist', 'shadcn-web-components');
 const releaseConfigPath = join(__dirname, '..', '.releaserc.json');
-const rootTsConfigPath = join(__dirname, '..', 'tsconfig.json');
-const targetTsConfigPath = join(__dirname, '..', 'src', 'shadcn-svelte', 'docs', 'tsconfig.json');
+const rootSvelteKitTsConfigPath = join(__dirname, '..', '.svelte-kit', 'tsconfig.json');
+const targetSvelteKitTsConfigPath = join(__dirname, '..', 'src', 'shadcn-svelte', 'docs', '.svelte-kit', 'tsconfig.json');
 
 const toKebabCase = (str) => str.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
 const toPascalCase = (str) => str.split('-').map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join('');
@@ -318,12 +318,13 @@ const generateViteConfig = (componentName, entryPath, outputDir) => ({
 
 const generateWrappers = async () => {
   try {
-    console.log('Copying tsconfig.json to src/shadcn-svelte/docs...');
+    console.log('Copying .svelte-kit/tsconfig.json to src/shadcn-svelte/docs/.svelte-kit...');
     try {
-      await fsp.copyFile(rootTsConfigPath, targetTsConfigPath);
-      console.log('tsconfig.json copied successfully.');
+      await fsp.mkdir(dirname(targetSvelteKitTsConfigPath), { recursive: true });
+      await fsp.copyFile(rootSvelteKitTsConfigPath, targetSvelteKitTsConfigPath);
+      console.log('.svelte-kit/tsconfig.json copied successfully.');
     } catch (copyError) {
-      console.error(`Error copying ${rootTsConfigPath} to ${targetTsConfigPath}:`, copyError.message);
+      console.error(`Error copying ${rootSvelteKitTsConfigPath} to ${targetSvelteKitTsConfigPath}:`, copyError.message);
       throw copyError;
     }
 
@@ -417,6 +418,7 @@ const generateWrappers = async () => {
     console.log('Components to build:', components.map(c => c.effectiveKebab));
 
     for (const { componentName, svelteFilePath, folderName, effectiveKebab, svelteFileName, componentPath } of components) {
+      console.log(`Processing component: ${effectiveKebab}`);
       const outDir = join(outputDir, folderName);
       await fsp.mkdir(outDir, { recursive: true });
       const originalComponentPath = dirname(svelteFilePath);
@@ -501,12 +503,11 @@ const generateWrappers = async () => {
     console.error('Error generating wrappers/types:', e);
     throw e;
   } finally {
-    // Clean up: Remove the copied tsconfig.json
     try {
-      await fsp.unlink(targetTsConfigPath);
-      console.log('Cleaned up: Removed src/shadcn-svelte/docs/tsconfig.json');
+      await fsp.unlink(targetSvelteKitTsConfigPath);
+      console.log('Cleaned up: Removed src/shadcn-svelte/docs/.svelte-kit/tsconfig.json');
     } catch (unlinkError) {
-      console.warn('Failed to clean up tsconfig.json:', unlinkError.message);
+      console.warn('Failed to clean up .svelte-kit/tsconfig.json:', unlinkError.message);
     }
   }
 };
