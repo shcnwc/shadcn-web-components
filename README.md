@@ -1,270 +1,199 @@
-// generate-wrappers.js
-import { promises as fs } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+# shadcn-web-components
 
-// Paths
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const componentsDir = join(__dirname, 'src', 'shadcn-svelte', 'docs', 'src', 'lib', 'registry', 'ui');
-const outputDir = join(__dirname, 'src', 'lib');
-const viteConfigPath = join(__dirname, 'vite.config.ts');
+A library of framework-agnostic web components built from [shadcn-svelte](https://github.com/huntabyte/shadcn-svelte), providing reusable UI components with TypeScript support and Visual Studio Code integration for enhanced developer experience.
 
-// Known compound components
-const compoundComponents = [
-  'Accordion', 'AlertDialog', 'Dialog', 'DropdownMenu', 'HoverCard', 'Menubar', 'NavigationMenu', 'Popover', 'Progress', 'RadioGroup', 'Select', 'Separator', 'Sheet', 'Slider', 'Switch', 'Tabs', 'Toast', 'Toaster', 'ToggleGroup', 'Toolbar', 'Tooltip'
-];
+## Features
 
-// Helper to convert component name to kebab-case (e.g., DialogContent -> dialog-content)
-const toKebabCase = (str) => {
-  return str
-    .replace(/([A-Z])/g, '-$1')
-    .toLowerCase()
-    .replace(/^-/, '');
-};
+- **Framework-Agnostic**: Components are compiled as standard web components, usable in any JavaScript framework (React, Vue, Angular, vanilla JS, etc.).
+- **Individual Packages**: Each component is published as a separate npm package (`@shadcn-web-components/<component>`) for modular usage.
+- **Root Package**: Import all components via `@shadcn-web-components/all`.
+- **TypeScript Support**: Includes TypeScript definitions (`index.d.ts`) for each component.
+- **VS Code Integration**: Generate `html-data.json` for autocompletion and IntelliSense in Visual Studio Code.
+- **Customizable**: Built with Tailwind CSS and `bits-ui` for flexible styling and behavior.
+- **Automated Builds**: Uses Vite and Rollup to generate self-contained bundles with no shared chunks.
 
-// Helper to convert component name to PascalCase (e.g., dialog-content -> DialogContent)
-const toPascalCase = (str) => {
-  return str
-    .split('-')
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join('');
-};
+## Installation
 
-// Helper to parse props from Svelte file
-const parsePropsFromSvelte = async (svelteFilePath) => {
-  try {
-    const content = await fs.readFile(svelteFilePath, 'utf8');
-    const scriptMatch = content.match(/<script lang="ts">([\s\S]*?)<\/script>/);
-    if (!scriptMatch) return {};
+To use a specific component, install it via npm:
 
-    const scriptContent = scriptMatch[1];
-    const propsMatch = scriptContent.match(/let\s*\{([\s\S]*?)\}\s*:\s*([^=]+)\s*=\s*\$props\(\);/);
-    if (!propsMatch) return {};
+```bash
+npm install @shadcn-web-components/<component-name>
+```
 
-    const destructured = propsMatch[1].trim();
-    const typeAnnotation = propsMatch[2].trim();
+For example, to install the `button` component:
 
-    const propItems = destructured.split(',').map(item => item.trim()).filter(item => item);
+```bash
+npm install @shadcn-web-components/button
+```
 
-    const props = {};
-    propItems.forEach(item => {
-      if (item === '...restProps') return;
+To use all components:
 
-      let propName, variableName, rawDefault = null;
+```bash
+npm install @shadcn-web-components/all
+```
 
-      if (item.includes(':') && item.includes('=')) {
-        const [renamePart, defaultPart] = item.split('=').map(part => part.trim());
-        const [prop, varName] = renamePart.split(':').map(part => part.trim());
-        propName = prop;
-        variableName = varName;
-        rawDefault = defaultPart;
-      } else if (item.includes(':')) {
-        const [prop, varName] = item.split(':').map(part => part.trim());
-        propName = prop;
-        variableName = varName;
-      } else if (item.includes('=')) {
-        const [varName, defaultPart] = item.split('=').map(part => part.trim());
-        propName = varName;
-        variableName = varName;
-        rawDefault = defaultPart;
-      } else {
-        propName = item;
-        variableName = item;
-      }
+## Usage
 
-      props[propName] = {
-        variableName,
-        rawDefault
-      };
-    });
+### Importing a Component
 
-    return props;
-  } catch (error) {
-    console.error(`Error parsing props from ${svelteFilePath}:`, error);
-    return {};
-  }
-};
+Each component is a custom element that can be used in HTML or JavaScript.
 
-// Helper to generate wrapper .svelte content
-const generateWrapperContent = async (svelteFilePath, componentName, importPath, isSubComponent = false, parentComponent = '', isCompound = false) => {
-  const tagName = `shadcn-${toKebabCase(componentName)}`;
-  const importStatement = isSubComponent
-    ? `import { ${parentComponent} } from '../../shadcn-svelte/docs/src/lib/registry/ui/${parentComponent.toLowerCase()}';`
-    : `import * as ${componentName} from '../../shadcn-svelte/docs/src/lib/registry/ui/${componentName.toLowerCase()}';`;
+```html
+<!-- Using the button component -->
+<shadcn-button variant="primary" onclick="alert('Clicked!')">Click Me</shadcn-button>
 
-  const parsedProps = await parsePropsFromSvelte(svelteFilePath);
+<script type="module">
+  import '@shadcn-web-components/button';
+</script>
+```
 
-  // Reconstruct destructuring
-  const destructuringItems = [];
-  const hasChildren = 'children' in parsedProps;
-  const attributes = [];
-  for (const propName in parsedProps) {
-    const { variableName, rawDefault } = parsedProps[propName];
-    let item = '';
-    if (variableName !== propName) {
-      item += `${propName}: ${variableName}`;
-    } else {
-      item += propName;
-    }
-    if (rawDefault) {
-      item += ` = ${rawDefault}`;
-    }
-    destructuringItems.push(item);
+For the root package:
 
-    // Attributes
-    if (propName === 'class') {
-      attributes.push('class={className}');
-    } else if (propName !== 'children') {
-      attributes.push(`{${variableName}}`);
-    }
-  }
-
-  const destructuringString = destructuringItems.join(',\n\t\t');
-
-  const componentAccess = isSubComponent ? `${parentComponent}.${componentName}` : isCompound ? `${componentName}.Root` : componentName;
-
-  const contentTag = hasChildren ? '{@render children?()}' : '<slot />';
-
-  return `<svelte:options customElement="${tagName}" />
-
-<script lang="ts">
-  ${importStatement}
-
-  let {
-    ${destructuringString}
-  } = $props<any>();
+```html
+<script type="module">
+  import '@shadcn-web-components/all';
 </script>
 
-<${componentAccess} ${attributes.join(' ')} {...$$restProps}>
-  ${contentTag}
-</${componentAccess}>
-`;
-};
+<shadcn-button variant="primary">Click Me</shadcn-button>
+<shadcn-drawer open>Drawer Content</shadcn-drawer>
+```
 
-// Helper to generate index.ts content
-const generateIndexContent = (componentName) => {
-  return `export { default as ${componentName} } from './${componentName}.svelte';`;
-};
+### Available Components
 
-// Helper to update vite.config.ts
-const updateViteConfig = async (components) => {
-  try {
-    const viteConfigContent = await fs.readFile(viteConfigPath, 'utf8');
-    const entryStartMarker = 'entry: {';
-    const entryEndMarker = '},';
-    const entryStartIndex = viteConfigContent.indexOf(entryStartMarker) + entryStartMarker.length;
-    const entryEndIndex = viteConfigContent.indexOf(entryEndMarker, entryStartIndex);
+Components are based on `shadcn-svelte` and include:
 
-    if (entryStartIndex === -1 || entryEndIndex === -1) {
-      throw new Error('Could not find build.lib.entry in vite.config.ts');
-    }
+- `accordion`, `accordion-content`, `accordion-item`, `accordion-trigger`
+- `button`, `card`, `drawer`, `dialog`, and more (see `component-props.json` for the full list).
 
-    const existingEntries = viteConfigContent
-      .slice(entryStartIndex, entryEndIndex)
-      .split('\n')
-      .map((line) => line.trim())
-      .filter((line) => line && !line.startsWith('//'));
+Each component has specific attributes defined in its `html-data.json` file, which provides metadata for attributes like `variant`, `disabled`, etc.
 
-    const newEntries = [
-      `'shadcn-web-components': resolve(__dirname, 'src/index.js')`,
-      ...components.map(
-        ({ componentName, isSubComponent, parentComponent }) =>
-          `'${toKebabCase(isSubComponent ? `${parentComponent}-${componentName}` : componentName)}': resolve(__dirname, 'src/lib/${toKebabCase(
-            isSubComponent ? `${parentComponent.toLowerCase()}-${componentName.toLowerCase()}` : componentName.toLowerCase()
-          )}/index.ts')`
-      )
-    ];
+### Visual Studio Code Integration
 
-    // Merge and deduplicate entries
-    const allEntries = [...new Set([...existingEntries, newEntries])].sort();
-    const updatedEntries = allEntries.join(',\n        ');
+To enable autocompletion and IntelliSense for `shadcn-*` custom elements in VS Code:
 
-    const updatedViteConfig = `${viteConfigContent.slice(0, entryStartIndex)}\n        ${updatedEntries}\n      ${viteConfigContent.slice(entryEndIndex)}`;
+1. Build the project to generate `dist/html-data.json`:
 
-    await fs.writeFile(viteConfigPath, updatedViteConfig);
-  } catch (error) {
-    throw new Error(`Failed to update vite.config.ts: ${error.message}`);
-  }
-};
+   ```bash
+   npm run build
+   ```
 
-// Main function to generate wrappers and update configs
-const generateWrappers = async () => {
-  try {
-    // Ensure output directory exists
-    await fs.mkdir(outputDir, { recursive: true });
+2. Run the setup script to configure VS Code:
 
-    // Read components directory
-    const componentFolders = await fs.readdir(componentsDir, { withFileTypes: true });
+   ```bash
+   npx shadcn-web-components setup
+   ```
 
-    const components = [];
+   This copies `dist/html-data.json` to `.vscode/html-data.json` and updates `.vscode/settings.json` with:
 
-    for (const folder of componentFolders) {
-      if (folder.isDirectory()) {
-        const componentPath = join(componentsDir, folder.name);
-        const files = await fs.readdir(componentPath, { withFileTypes: true });
+   ```json
+   {
+     "html.customData": ["./html-data.json"]
+   }
+   ```
 
-        // Determine if root is compound (has sub .svelte files or in list)
-        const subSvelteFiles = files.filter(f => f.isFile() && f.name.endsWith('.svelte') && f.name !== `${folder.name}.svelte`);
-        const isCompound = subSvelteFiles.length > 0 || compoundComponents.includes(toPascalCase(folder.name));
+3. Open a `.html` file in VS Code to see autocompletion for `shadcn-*` tags and their attributes.
 
-        // Add root component if exists
-        const componentFile = files.find((f) => f.name === `${folder.name}.svelte`);
-        if (componentFile) {
-          components.push({
-            componentName: toPascalCase(folder.name),
-            importPath: folder.name,
-            isSubComponent: false,
-            svelteFilePath: join(componentPath, `${folder.name}.svelte`),
-            isCompound: isCompound
-          });
-        }
+## Development
 
-        // Add sub-components
-        for (const file of subSvelteFiles) {
-          const subComponentName = file.name.replace('.svelte', '');
-          components.push({
-            componentName: toPascalCase(subComponentName),
-            importPath: `${folder.name}/${subComponentName}`,
-            isSubComponent: true,
-            parentComponent: toPascalCase(folder.name),
-            svelteFilePath: join(componentPath, file.name),
-            isCompound: false
-          });
-        }
-      }
-    }
+### Prerequisites
 
-    // Generate wrapper files
-    for (const { componentName, importPath, isSubComponent, parentComponent, svelteFilePath, isCompound } of components) {
-      const outputFolderName = toKebabCase(isSubComponent ? `${parentComponent.toLowerCase()}-${componentName.toLowerCase()}` : componentName.toLowerCase());
-      const outputFolder = join(outputDir, outputFolderName);
-      await fs.mkdir(outputFolder, { recursive: true });
+- Node.js >= 20
+- npm >= 9
+- Git (for submodule management)
 
-      // Write .svelte file
-      const wrapperContent = await generateWrapperContent(svelteFilePath, componentName, importPath, isSubComponent, parentComponent, isCompound);
-      await fs.writeFile(join(outputFolder, `${componentName}.svelte`), wrapperContent);
+### Setup
 
-      // Write index.ts file
-      const indexContent = generateIndexContent(componentName);
-      await fs.writeFile(join(outputFolder, 'index.ts'), indexContent);
-    }
+1. Clone the repository:
 
-    // Update src/index.js
-    const indexContent = components
-      .map(({ componentName, isSubComponent, parentComponent }) =>
-        `export * from './lib/${toKebabCase(isSubComponent ? `${parentComponent.toLowerCase()}-${componentName.toLowerCase()}` : componentName.toLowerCase())}';`
-      )
-      .join('\n');
-    await fs.writeFile(join(__dirname, 'src', 'index.js'), indexContent);
+   ```bash
+   git clone <your-repo-url>
+   cd shadcn-web-components
+   ```
 
-    // Update vite.config.ts
-    await updateViteConfig(components);
+2. Initialize the `shadcn-svelte` submodule:
 
-    console.log('Wrappers generated and vite.config.ts updated successfully!');
-  } catch (error) {
-    console.error('Error generating wrappers:', error);
-  }
-};
+   ```bash
+   git submodule init
+   git submodule update
+   ```
 
-// Run the script
-generateWrappers();
+3. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+### Building
+
+The build process generates individual component packages in `dist/<component-name>` and the root package in `dist`.
+
+```bash
+npm run build
+```
+
+This runs:
+- `scripts/generate-wrappers.js`: Generates component files, TypeScript definitions, and `html-data.json`, and builds each component individually using Vite.
+- `scripts/copy-types.js`: Copies `package.json`, `index.d.ts`, and `html-data.json` to `dist`.
+
+The output includes:
+- `dist/<component-name>/index.js`: Compiled web component.
+- `dist/<component-name>/index.js.map`: Source map.
+- `dist/<component-name>/index.d.ts`: TypeScript definitions.
+- `dist/<component-name>/html-data.json`: Custom element metadata.
+- `dist/<component-name>/package.json`: npm package configuration.
+- `dist/package.json`, `dist/index.js`, `dist/types.d.ts`, `dist/html-data.json`: Root package (`@shadcn-web-components/all`).
+
+### Bundle Analysis
+
+To analyze bundle sizes and dependencies, the build generates `dist/<component-name>-stats.html` files (using `rollup-plugin-visualizer`). Open these in a browser to inspect what’s included in each component’s bundle, especially for large components like `drawer` (~1 MB due to `vaul-svelte`).
+
+### Scripts
+
+- `npm run dev`: Start the development server (uses `vite.config.ts`).
+- `npm run build`: Build all components and the root package.
+- `npm run setup`: Configure VS Code for custom element autocompletion.
+- `npm run preview`: Preview the built components.
+- `npm run check`: Run Svelte type checking.
+- `npm run lint`: Run ESLint.
+
+### Publishing
+
+The project uses `semantic-release` to publish packages to npm. Ensure `NPM_TOKEN` and `GH_TOKEN` are set in your CI environment (e.g., GitHub Actions).
+
+To manually publish a component for testing:
+
+```bash
+cd dist/<component-name>
+npm publish --access public
+```
+
+To publish the root package:
+
+```bash
+cd dist
+npm publish --access public
+```
+
+## Troubleshooting
+
+- **Large Bundle Sizes**: Components like `drawer` may have large bundles (~1 MB) due to dependencies like `vaul-svelte`. Check `dist/<component-name>-stats.html` for details. To optimize, ensure `sideEffects: false` is set in `package.json` files and verify tree-shaking in Vite.
+- **Missing Components**: If components listed in `component-props.json` are not built, check the build log for `Skipping component` messages. Ensure corresponding `.svelte` files exist in `src/shadcn-svelte/docs/src/lib/registry/ui`.
+- **Svelte Warnings**: If warnings about `...restProps` appear, verify that `<svelte:options customElement>` includes all props from `component-props.json`. The build script automatically injects these props.
+- **VS Code Autocompletion**: If autocompletion doesn’t work, ensure `.vscode/settings.json` includes `"html.customData": ["./html-data.json"]` and that `dist/html-data.json` was generated.
+
+## Contributing
+
+1. Fork the repository.
+2. Create a branch (`git checkout -b feature/your-feature`).
+3. Make changes and commit (`git commit -m "Add your feature"`).
+4. Push to your fork (`git push origin feature/your-feature`).
+5. Open a pull request.
+
+Please ensure your changes:
+- Do not modify the `src/shadcn-svelte` submodule directly (use `git submodule update --remote` to sync).
+- Update `component-props.json` for new components or props.
+- Run `npm run lint` and `npm run check` before committing.
+
+## License
+
+MIT License. See [LICENSE](./LICENSE) for details.
