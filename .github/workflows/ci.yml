@@ -11,8 +11,8 @@ jobs:
         with:
           node-version: '20'
       - run: npm ci
-      - run: npm run generate
-      - run: npm run build
+      - name: Generate
+        run: npm run build
       - name: Publish 🚀
         run: npx semantic-release
         env:
