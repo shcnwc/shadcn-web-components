@@ -3,11 +3,25 @@ const fs = require('fs');
 const path = require('path');
 
 const distDir = path.join(__dirname, '..', 'dist');
-const folders = fs.readdirSync(distDir, { withFileTypes: true });
 
+// Publish root package
+const rootPkgPath = path.join(distDir, 'package.json');
+if (fs.existsSync(rootPkgPath)) {
+  console.log(`Publishing ${distDir}`);
+  execSync(`npm publish --access public`, { cwd: distDir, stdio: 'inherit' });
+} else {
+  console.error(`Root package.json not found at ${rootPkgPath}`);
+  process.exit(1);
+}
+
+// Publish sub-component packages
+const folders = fs.readdirSync(distDir, { withFileTypes: true });
 for (const folder of folders) {
-  if (!folder.isDirectory() || folder.name === 'shadcn-web-components' || folder.name === 'chunks') continue;
+  if (!folder.isDirectory()) continue;
   const pkgDir = path.join(distDir, folder.name);
-  console.log(`Publishing ${pkgDir}`);
-  execSync(`npm publish --access public`, { cwd: pkgDir, stdio: 'inherit' });
+  const pkgPath = path.join(pkgDir, 'package.json');
+  if (fs.existsSync(pkgPath)) {
+    console.log(`Publishing ${pkgDir}`);
+    execSync(`npm publish --access public`, { cwd: pkgDir, stdio: 'inherit' });
+  }
 }

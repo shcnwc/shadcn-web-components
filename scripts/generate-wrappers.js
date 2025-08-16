@@ -13,7 +13,7 @@ const utilsSrcPath = join(__dirname, '..', 'src', 'shadcn-svelte', 'docs', 'src'
 const utilsDestPath = join(__dirname, '..', 'src', 'lib', 'utils.ts');
 const outputDir = join(__dirname, '..', 'src', 'lib');
 const manifestPath = join(__dirname, '..', 'component-props.json');
-const rootPackageDir = join(__dirname, '..', 'dist', 'shadcn-web-components');
+const rootPackageDir = join(__dirname, '..', 'dist');
 const releaseConfigPath = join(__dirname, '..', '.releaserc.json');
 const rootSvelteKitTsConfigPath = join(__dirname, '..', '.svelte-kit', 'tsconfig.json');
 const targetSvelteKitTsConfigPath = join(__dirname, '..', 'src', 'shadcn-svelte', 'docs', '.svelte-kit', 'tsconfig.json');
@@ -224,7 +224,6 @@ const generateReleaseConfig = async (components) => {
       tarballDir: `dist/${folderName}`
     }))
   ].map(config => ['@semantic-release/npm', config]);
-
   const releaseConfig = {
     branches: ['master'],
     plugins: [
@@ -268,7 +267,7 @@ const generateReleaseConfig = async (components) => {
       ]
     ]
   };
-
+  console.log('Writing .releaserc.json to:', releaseConfigPath);
   await fsp.writeFile(releaseConfigPath, JSON.stringify(releaseConfig, null, 2), 'utf8');
 };
 
@@ -308,7 +307,6 @@ const generateViteConfig = (componentName, entryPath, outputDir) => ({
     treeshake: true,
     rollupOptions: {
       external: [],
-      inlineDynamicImports: true,
       output: {
         manualChunks: undefined,
         chunkFileNames: () => {
@@ -498,7 +496,7 @@ const generateWrappers = async () => {
       JSON.stringify(await generateRootPackageJson(components), null, 2)
     );
     const htmlData = { version: 1.1, tags: htmlDataTags };
-    await fsp.writeFile(join(__dirname, '..', 'dist', 'html-data.json'), JSON.stringify(htmlData, null, 2), 'utf8');
+    await fsp.writeFile(join(rootPackageDir, 'html-data.json'), JSON.stringify(htmlData, null, 2), 'utf8');
 
     // Generate .releaserc.json
     await generateReleaseConfig(components);

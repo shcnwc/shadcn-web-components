@@ -20,10 +20,9 @@ const prepareDist = async () => {
       } catch {}
     }
   }
-  // Clean up unwanted directories
+
   await fsp.rm(join(distDir, 'chunks'), { recursive: true, force: true });
-  await fsp.rm(join(distDir, 'shadcn-web-components'), { recursive: true, force: true });
-  // Copy root html-data.json
+
   try {
     await fsp.copyFile(join(process.cwd(), 'src', 'html-data.json'), join(distDir, 'html-data.json'));
   } catch {}

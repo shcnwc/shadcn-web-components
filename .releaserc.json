@@ -1,15 +1,32 @@
 {
-  "branches": ["master"],
+  "branches": [
+    "master"
+  ],
   "plugins": [
     [
       "@semantic-release/commit-analyzer",
       {
         "releaseRules": [
-          { "type": "chore", "release": false },
-          { "type": "docs", "release": "patch" },
-          { "type": "feat", "release": "minor" },
-          { "type": "fix", "release": "patch" },
-          { "message": "/shadcn-svelte/", "release": "patch" }
+          {
+            "type": "chore",
+            "release": false
+          },
+          {
+            "type": "docs",
+            "release": "patch"
+          },
+          {
+            "type": "feat",
+            "release": "minor"
+          },
+          {
+            "type": "fix",
+            "release": "patch"
+          },
+          {
+            "message": "/shadcn-svelte/",
+            "release": "patch"
+          }
         ]
       }
     ],
@@ -28,15 +45,1059 @@
       }
     ],
     [
-      "@semantic-release/exec",
+      "@semantic-release/npm",
       {
-        "publishCmd": "node scripts/publish-sub.js"
+        "pkgRoot": "dist",
+        "npmPublish": true,
+        "tarballDir": "dist"
       }
     ],
     [
       "@semantic-release/npm",
       {
-        "pkgRoot": "dist"
+        "pkgRoot": "dist/accordion",
+        "npmPublish": true,
+        "tarballDir": "dist/accordion"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/accordion-content",
+        "npmPublish": true,
+        "tarballDir": "dist/accordion-content"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/accordion-item",
+        "npmPublish": true,
+        "tarballDir": "dist/accordion-item"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/accordion-trigger",
+        "npmPublish": true,
+        "tarballDir": "dist/accordion-trigger"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/alert",
+        "npmPublish": true,
+        "tarballDir": "dist/alert"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/alert-description",
+        "npmPublish": true,
+        "tarballDir": "dist/alert-description"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/alert-title",
+        "npmPublish": true,
+        "tarballDir": "dist/alert-title"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/aspect-ratio",
+        "npmPublish": true,
+        "tarballDir": "dist/aspect-ratio"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/avatar",
+        "npmPublish": true,
+        "tarballDir": "dist/avatar"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/avatar-fallback",
+        "npmPublish": true,
+        "tarballDir": "dist/avatar-fallback"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/avatar-image",
+        "npmPublish": true,
+        "tarballDir": "dist/avatar-image"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/badge",
+        "npmPublish": true,
+        "tarballDir": "dist/badge"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/breadcrumb",
+        "npmPublish": true,
+        "tarballDir": "dist/breadcrumb"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/breadcrumb-ellipsis",
+        "npmPublish": true,
+        "tarballDir": "dist/breadcrumb-ellipsis"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/breadcrumb-item",
+        "npmPublish": true,
+        "tarballDir": "dist/breadcrumb-item"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/breadcrumb-link",
+        "npmPublish": true,
+        "tarballDir": "dist/breadcrumb-link"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/breadcrumb-list",
+        "npmPublish": true,
+        "tarballDir": "dist/breadcrumb-list"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/breadcrumb-page",
+        "npmPublish": true,
+        "tarballDir": "dist/breadcrumb-page"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/breadcrumb-separator",
+        "npmPublish": true,
+        "tarballDir": "dist/breadcrumb-separator"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/button",
+        "npmPublish": true,
+        "tarballDir": "dist/button"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/calendar",
+        "npmPublish": true,
+        "tarballDir": "dist/calendar"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/card",
+        "npmPublish": true,
+        "tarballDir": "dist/card"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/card-content",
+        "npmPublish": true,
+        "tarballDir": "dist/card-content"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/card-description",
+        "npmPublish": true,
+        "tarballDir": "dist/card-description"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/card-footer",
+        "npmPublish": true,
+        "tarballDir": "dist/card-footer"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/card-header",
+        "npmPublish": true,
+        "tarballDir": "dist/card-header"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/card-title",
+        "npmPublish": true,
+        "tarballDir": "dist/card-title"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/carousel",
+        "npmPublish": true,
+        "tarballDir": "dist/carousel"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/carousel-content",
+        "npmPublish": true,
+        "tarballDir": "dist/carousel-content"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/carousel-item",
+        "npmPublish": true,
+        "tarballDir": "dist/carousel-item"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/carousel-next",
+        "npmPublish": true,
+        "tarballDir": "dist/carousel-next"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/carousel-previous",
+        "npmPublish": true,
+        "tarballDir": "dist/carousel-previous"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/checkbox",
+        "npmPublish": true,
+        "tarballDir": "dist/checkbox"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/collapsible",
+        "npmPublish": true,
+        "tarballDir": "dist/collapsible"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/collapsible-content",
+        "npmPublish": true,
+        "tarballDir": "dist/collapsible-content"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/collapsible-trigger",
+        "npmPublish": true,
+        "tarballDir": "dist/collapsible-trigger"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/command",
+        "npmPublish": true,
+        "tarballDir": "dist/command"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/command-dialog",
+        "npmPublish": true,
+        "tarballDir": "dist/command-dialog"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/command-empty",
+        "npmPublish": true,
+        "tarballDir": "dist/command-empty"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/command-group",
+        "npmPublish": true,
+        "tarballDir": "dist/command-group"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/command-input",
+        "npmPublish": true,
+        "tarballDir": "dist/command-input"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/command-item",
+        "npmPublish": true,
+        "tarballDir": "dist/command-item"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/command-list",
+        "npmPublish": true,
+        "tarballDir": "dist/command-list"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/command-separator",
+        "npmPublish": true,
+        "tarballDir": "dist/command-separator"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/command-shortcut",
+        "npmPublish": true,
+        "tarballDir": "dist/command-shortcut"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/drawer",
+        "npmPublish": true,
+        "tarballDir": "dist/drawer"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/drawer-close",
+        "npmPublish": true,
+        "tarballDir": "dist/drawer-close"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/drawer-content",
+        "npmPublish": true,
+        "tarballDir": "dist/drawer-content"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/drawer-description",
+        "npmPublish": true,
+        "tarballDir": "dist/drawer-description"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/drawer-footer",
+        "npmPublish": true,
+        "tarballDir": "dist/drawer-footer"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/drawer-header",
+        "npmPublish": true,
+        "tarballDir": "dist/drawer-header"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/drawer-overlay",
+        "npmPublish": true,
+        "tarballDir": "dist/drawer-overlay"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/drawer-title",
+        "npmPublish": true,
+        "tarballDir": "dist/drawer-title"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/drawer-trigger",
+        "npmPublish": true,
+        "tarballDir": "dist/drawer-trigger"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/input",
+        "npmPublish": true,
+        "tarballDir": "dist/input"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/input-otp",
+        "npmPublish": true,
+        "tarballDir": "dist/input-otp"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/input-otp-group",
+        "npmPublish": true,
+        "tarballDir": "dist/input-otp-group"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/input-otp-separator",
+        "npmPublish": true,
+        "tarballDir": "dist/input-otp-separator"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/input-otp-slot",
+        "npmPublish": true,
+        "tarballDir": "dist/input-otp-slot"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/label",
+        "npmPublish": true,
+        "tarballDir": "dist/label"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/menubar",
+        "npmPublish": true,
+        "tarballDir": "dist/menubar"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/menubar-checkbox-item",
+        "npmPublish": true,
+        "tarballDir": "dist/menubar-checkbox-item"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/menubar-content",
+        "npmPublish": true,
+        "tarballDir": "dist/menubar-content"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/menubar-item",
+        "npmPublish": true,
+        "tarballDir": "dist/menubar-item"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/menubar-label",
+        "npmPublish": true,
+        "tarballDir": "dist/menubar-label"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/menubar-radio-item",
+        "npmPublish": true,
+        "tarballDir": "dist/menubar-radio-item"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/menubar-separator",
+        "npmPublish": true,
+        "tarballDir": "dist/menubar-separator"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/menubar-shortcut",
+        "npmPublish": true,
+        "tarballDir": "dist/menubar-shortcut"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/menubar-sub-content",
+        "npmPublish": true,
+        "tarballDir": "dist/menubar-sub-content"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/menubar-sub-trigger",
+        "npmPublish": true,
+        "tarballDir": "dist/menubar-sub-trigger"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/menubar-trigger",
+        "npmPublish": true,
+        "tarballDir": "dist/menubar-trigger"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/navigation-menu",
+        "npmPublish": true,
+        "tarballDir": "dist/navigation-menu"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/navigation-menu-content",
+        "npmPublish": true,
+        "tarballDir": "dist/navigation-menu-content"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/navigation-menu-indicator",
+        "npmPublish": true,
+        "tarballDir": "dist/navigation-menu-indicator"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/navigation-menu-item",
+        "npmPublish": true,
+        "tarballDir": "dist/navigation-menu-item"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/navigation-menu-link",
+        "npmPublish": true,
+        "tarballDir": "dist/navigation-menu-link"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/navigation-menu-list",
+        "npmPublish": true,
+        "tarballDir": "dist/navigation-menu-list"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/navigation-menu-trigger",
+        "npmPublish": true,
+        "tarballDir": "dist/navigation-menu-trigger"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/navigation-menu-viewport",
+        "npmPublish": true,
+        "tarballDir": "dist/navigation-menu-viewport"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/pagination",
+        "npmPublish": true,
+        "tarballDir": "dist/pagination"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/pagination-content",
+        "npmPublish": true,
+        "tarballDir": "dist/pagination-content"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/pagination-ellipsis",
+        "npmPublish": true,
+        "tarballDir": "dist/pagination-ellipsis"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/pagination-item",
+        "npmPublish": true,
+        "tarballDir": "dist/pagination-item"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/pagination-link",
+        "npmPublish": true,
+        "tarballDir": "dist/pagination-link"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/progress",
+        "npmPublish": true,
+        "tarballDir": "dist/progress"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/radio-group",
+        "npmPublish": true,
+        "tarballDir": "dist/radio-group"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/radio-group-item",
+        "npmPublish": true,
+        "tarballDir": "dist/radio-group-item"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/range-calendar",
+        "npmPublish": true,
+        "tarballDir": "dist/range-calendar"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/scroll-area",
+        "npmPublish": true,
+        "tarballDir": "dist/scroll-area"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/separator",
+        "npmPublish": true,
+        "tarballDir": "dist/separator"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-content",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-content"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-footer",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-footer"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-group-action",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-group-action"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-group-content",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-group-content"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-group-label",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-group-label"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-group",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-group"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-header",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-header"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-inset",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-inset"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-menu-action",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-menu-action"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-menu-badge",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-menu-badge"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-menu-button",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-menu-button"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-menu-item",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-menu-item"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-menu-skeleton",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-menu-skeleton"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-menu-sub-button",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-menu-sub-button"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-menu-sub-item",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-menu-sub-item"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-menu-sub",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-menu-sub"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-menu",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-menu"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-provider",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-provider"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-rail",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-rail"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-separator",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-separator"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/sidebar-trigger",
+        "npmPublish": true,
+        "tarballDir": "dist/sidebar-trigger"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/skeleton",
+        "npmPublish": true,
+        "tarballDir": "dist/skeleton"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/slider",
+        "npmPublish": true,
+        "tarballDir": "dist/slider"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/switch",
+        "npmPublish": true,
+        "tarballDir": "dist/switch"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/table",
+        "npmPublish": true,
+        "tarballDir": "dist/table"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/table-body",
+        "npmPublish": true,
+        "tarballDir": "dist/table-body"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/table-caption",
+        "npmPublish": true,
+        "tarballDir": "dist/table-caption"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/table-cell",
+        "npmPublish": true,
+        "tarballDir": "dist/table-cell"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/table-footer",
+        "npmPublish": true,
+        "tarballDir": "dist/table-footer"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/table-head",
+        "npmPublish": true,
+        "tarballDir": "dist/table-head"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/table-header",
+        "npmPublish": true,
+        "tarballDir": "dist/table-header"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/table-row",
+        "npmPublish": true,
+        "tarballDir": "dist/table-row"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/tabs",
+        "npmPublish": true,
+        "tarballDir": "dist/tabs"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/tabs-content",
+        "npmPublish": true,
+        "tarballDir": "dist/tabs-content"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/tabs-list",
+        "npmPublish": true,
+        "tarballDir": "dist/tabs-list"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/tabs-trigger",
+        "npmPublish": true,
+        "tarballDir": "dist/tabs-trigger"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/textarea",
+        "npmPublish": true,
+        "tarballDir": "dist/textarea"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/toggle",
+        "npmPublish": true,
+        "tarballDir": "dist/toggle"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/toggle-group",
+        "npmPublish": true,
+        "tarballDir": "dist/toggle-group"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist/toggle-group-item",
+        "npmPublish": true,
+        "tarballDir": "dist/toggle-group-item"
       }
     ],
     [
