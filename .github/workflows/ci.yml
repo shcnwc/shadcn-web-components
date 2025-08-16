@@ -26,3 +26,6 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: Cleanup dist folder
+        run: rm -rf dist
+        if: always()
