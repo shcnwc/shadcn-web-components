@@ -15,6 +15,8 @@ const outputDir = join(__dirname, '..', 'src', 'lib');
 const manifestPath = join(__dirname, '..', 'component-props.json');
 const rootPackageDir = join(__dirname, '..', 'dist', 'shadcn-web-components');
 const releaseConfigPath = join(__dirname, '..', '.releaserc.json');
+const rootTsConfigPath = join(__dirname, '..', 'tsconfig.json');
+const targetTsConfigPath = join(__dirname, '..', 'src', 'shadcn-svelte', 'docs', 'tsconfig.json');
 
 const toKebabCase = (str) => str.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
 const toPascalCase = (str) => str.split('-').map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join('');
@@ -311,11 +313,20 @@ const generateViteConfig = (componentName, entryPath, outputDir) => ({
         }
       }
     }
-  }
+  },
 });
 
 const generateWrappers = async () => {
   try {
+    console.log('Copying tsconfig.json to src/shadcn-svelte/docs...');
+    try {
+      await fsp.copyFile(rootTsConfigPath, targetTsConfigPath);
+      console.log('tsconfig.json copied successfully.');
+    } catch (copyError) {
+      console.error(`Error copying ${rootTsConfigPath} to ${targetTsConfigPath}:`, copyError.message);
+      throw copyError;
+    }
+
     const manifestRaw = await fsp.readFile(manifestPath, 'utf8');
     const manifest = JSON.parse(manifestRaw);
     const allowedSet = new Set(
@@ -460,8 +471,14 @@ const generateWrappers = async () => {
       htmlDataTags.push(genHtmlDataEntry(tagName, manifestEntry));
 
       // Build the component individually
-      const viteConfig = generateViteConfig(effectiveKebab, join(outDir, 'index.ts'), join(__dirname, '..', 'dist'));
-      await build({ configFile: false, ...viteConfig });
+      try {
+        const viteConfig = generateViteConfig(effectiveKebab, join(outDir, 'index.ts'), join(__dirname, '..', 'dist'));
+        await build({ configFile: false, ...viteConfig });
+        console.log(`Built component: ${effectiveKebab}`);
+      } catch (buildError) {
+        console.error(`Failed to build component ${effectiveKebab}:`, buildError);
+        throw buildError;
+      }
     }
 
     await fsp.mkdir(rootPackageDir, { recursive: true });
@@ -476,14 +493,25 @@ const generateWrappers = async () => {
     const htmlData = { version: 1.1, tags: htmlDataTags };
     await fsp.writeFile(join(__dirname, '..', 'dist', 'html-data.json'), JSON.stringify(htmlData, null, 2), 'utf8');
 
-    // Generate .releaserc.jsonc
+    // Generate .releaserc.json
     await generateReleaseConfig(components);
 
-    console.log('Wrappers, types, package.json files, and .releaserc.jsonc generated; individual components built; html-data.json updated.');
+    console.log('Wrappers, types, package.json files, and .releaserc.json generated; individual components built; html-data.json updated.');
   } catch (e) {
     console.error('Error generating wrappers/types:', e);
-    process.exit(1);
+    throw e;
+  } finally {
+    // Clean up: Remove the copied tsconfig.json
+    try {
+      await fsp.unlink(targetTsConfigPath);
+      console.log('Cleaned up: Removed src/shadcn-svelte/docs/tsconfig.json');
+    } catch (unlinkError) {
+      console.warn('Failed to clean up tsconfig.json:', unlinkError.message);
+    }
   }
 };
 
-generateWrappers();
+generateWrappers().catch((error) => {
+  console.error('Build failed:', error);
+  process.exit(1);
+});
