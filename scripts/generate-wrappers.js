@@ -273,7 +273,6 @@ const generateViteConfig = (componentName, entryPath, outputDir) => ({
       compilerOptions: {
         customElement: true
       },
-      configFile: tsConfig,
       include: [
         'src/**/*.svelte',
         'src/shadcn-svelte/docs/src/lib/registry/ui/**/*.svelte'
