@@ -27,3 +27,4 @@ dist
 .svelte-kit
 html-data.json
 src/html-data.json
+src/lib
