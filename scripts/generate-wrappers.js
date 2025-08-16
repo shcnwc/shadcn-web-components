@@ -175,9 +175,10 @@ const genHtmlDataEntry = (tagName, manifestEntry) => {
   return { name: tagName, description: '', attributes };
 };
 
-const generatePackageJson = async (componentName, manifestEntry) => {
+const generatePackageJson = async (componentName) => {
+  const manifestEntry = manifest[componentName] || {};
   const pkg = {
-    name: `@shcnwc/shadcn-web-components/${componentName}`,
+    name: `@shcnwc/shadcn-${componentName}-web-component`,
     type: 'module',
     main: 'index.js',
     types: 'index.d.ts',
@@ -204,7 +205,9 @@ const generateRootPackageJson = async (components) => {
     files: ['index.js', 'index.js.map', 'types.d.ts', 'html-data.json'],
     publishConfig: { access: 'public' },
     sideEffects: false,
-    dependencies: Object.fromEntries(components.map(({ effectiveKebab }) => [`@shcnwc/shadcn-web-components/${effectiveKebab}`, '*']))
+    dependencies: Object.fromEntries(
+      components.map(({ effectiveKebab }) => [`@shcnwc/shadcn-${effectiveKebab}-web-component`, '*'])
+    )
   };
 };
 
@@ -316,6 +319,8 @@ const generateViteConfig = (componentName, entryPath, outputDir) => ({
   },
 });
 
+let manifest;
+
 const generateWrappers = async () => {
   try {
     console.log('Copying .svelte-kit/tsconfig.json to src/shadcn-svelte/docs/.svelte-kit...');
@@ -329,7 +334,7 @@ const generateWrappers = async () => {
     }
 
     const manifestRaw = await fsp.readFile(manifestPath, 'utf8');
-    const manifest = JSON.parse(manifestRaw);
+    manifest = JSON.parse(manifestRaw);
     const allowedSet = new Set(
       Object.keys(manifest).filter(key => /^[a-z-]+(-[a-z-]+)*$/.test(key))
     );
@@ -468,7 +473,7 @@ const generateWrappers = async () => {
       await fsp.writeFile(join(outDir, 'html-data.json'), JSON.stringify(componentHtmlData, null, 2));
       await fsp.writeFile(
         join(outDir, 'package.json'),
-        JSON.stringify(await generatePackageJson(effectiveKebab, manifestEntry), null, 2)
+        JSON.stringify(await generatePackageJson(effectiveKebab), null, 2)
       );
       htmlDataTags.push(genHtmlDataEntry(tagName, manifestEntry));
 
@@ -484,7 +489,7 @@ const generateWrappers = async () => {
     }
 
     await fsp.mkdir(rootPackageDir, { recursive: true });
-    const indexJs = components.map(({ effectiveKebab }) => `export * from '@shcnwc/shadcn-web-components/${effectiveKebab}';`).join('\n');
+    const indexJs = components.map(({ effectiveKebab }) => `export * from '@shcnwc/shadcn-${effectiveKebab}-web-component';`).join('\n');
     await fsp.writeFile(join(rootPackageDir, 'index.js'), indexJs);
     const allDts = allInterfaces.join('\n\n') + '\ndeclare global {\n  interface HTMLElementTagNameMap {\n' + allTagMaps.join('\n') + '\n  }\n}\n';
     await fsp.writeFile(join(rootPackageDir, 'types.d.ts'), allDts);
