@@ -15,6 +15,7 @@ const outputDir = join(__dirname, '..', 'src', 'lib');
 const manifestPath = join(__dirname, '..', 'component-props.json');
 const htmlDataPath = join(__dirname, '..', 'src', 'html-data.json');
 const rootPackageDir = join(__dirname, '..', 'dist', 'shadcn-web-components');
+const releaseConfigPath = join(__dirname, '..', '.releaserc.jsonc');
 
 const toKebabCase = (str) => str.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
 const toPascalCase = (str) => str.split('-').map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join('');
@@ -175,7 +176,7 @@ const genHtmlDataEntry = (tagName, manifestEntry) => {
 
 const generatePackageJson = async (componentName, manifestEntry) => {
   const pkg = {
-    name: `@shadcn-web-components/${componentName}`,
+    name: `@shcnwc/shadcn-web-components/${componentName}`,
     type: 'module',
     main: 'index.js',
     types: 'index.d.ts',
@@ -195,15 +196,76 @@ const generatePackageJson = async (componentName, manifestEntry) => {
 
 const generateRootPackageJson = async (components) => {
   return {
-    name: '@shadcn-web-components/all',
+    name: '@shcnwc/shadcn-web-components',
     type: 'module',
     main: 'index.js',
     types: 'types.d.ts',
     files: ['index.js', 'index.js.map', 'types.d.ts', 'html-data.json'],
     publishConfig: { access: 'public' },
     sideEffects: false,
-    dependencies: Object.fromEntries(components.map(({ effectiveKebab }) => [`@shadcn-web-components/${effectiveKebab}`, '*']))
+    dependencies: Object.fromEntries(components.map(({ effectiveKebab }) => [`@shcnwc/shadcn-web-components/${effectiveKebab}`, '*']))
   };
+};
+
+const generateReleaseConfig = async (components) => {
+  const npmPlugins = [
+    {
+      pkgRoot: 'dist',
+      npmPublish: true,
+      tarballDir: 'dist'
+    },
+    ...components.map(({ folderName }) => ({
+      pkgRoot: `dist/${folderName}`,
+      npmPublish: true,
+      tarballDir: `dist/${folderName}`
+    }))
+  ].map(config => ['@semantic-release/npm', config]);
+
+  const releaseConfig = {
+    branches: ['master'],
+    plugins: [
+      [
+        '@semantic-release/commit-analyzer',
+        {
+          releaseRules: [
+            { type: 'chore', release: false },
+            { type: 'docs', release: 'patch' },
+            { type: 'feat', release: 'minor' },
+            { type: 'fix', release: 'patch' },
+            { message: '/shadcn-svelte/', release: 'patch' }
+          ]
+        }
+      ],
+      '@semantic-release/release-notes-generator',
+      [
+        '@semantic-release/changelog',
+        {
+          changelogFile: 'CHANGELOG.md',
+          changelogTitle: '# Changelog\n\nAll notable changes to this project will be documented in this file.'
+        }
+      ],
+      [
+        '@semantic-release/exec',
+        {
+          prepareCmd: `node scripts/set-versions.js \${nextRelease.version} && npm run build`
+        }
+      ],
+      ...npmPlugins,
+      [
+        '@semantic-release/git',
+        {
+          assets: [
+            'dist/package.json',
+            'dist/*/package.json',
+            'CHANGELOG.md'
+          ],
+          message: 'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}'
+        }
+      ]
+    ]
+  };
+
+  await fsp.writeFile(releaseConfigPath, JSON.stringify(releaseConfig, null, 2), 'utf8');
 };
 
 const generateViteConfig = (componentName, entryPath, outputDir) => ({
@@ -387,7 +449,7 @@ const generateWrappers = async () => {
     }
 
     await fsp.mkdir(rootPackageDir, { recursive: true });
-    const indexJs = components.map(({ effectiveKebab }) => `export * from '@shadcn-web-components/${effectiveKebab}';`).join('\n');
+    const indexJs = components.map(({ effectiveKebab }) => `export * from '@shcnwc/shadcn-web-components/${effectiveKebab}';`).join('\n');
     await fsp.writeFile(join(rootPackageDir, 'index.js'), indexJs);
     const allDts = allInterfaces.join('\n\n') + '\ndeclare global {\n  interface HTMLElementTagNameMap {\n' + allTagMaps.join('\n') + '\n  }\n}\n';
     await fsp.writeFile(join(rootPackageDir, 'types.d.ts'), allDts);
@@ -397,9 +459,14 @@ const generateWrappers = async () => {
     );
     const htmlData = { version: 1.1, tags: htmlDataTags };
     await fsp.writeFile(join(__dirname, '..', 'dist', 'html-data.json'), JSON.stringify(htmlData, null, 2), 'utf8');
-    console.log('Wrappers, types, and package.json files generated; individual components built; html-data.json updated.');
+
+    // Generate .releaserc.jsonc
+    await generateReleaseConfig(components);
+
+    console.log('Wrappers, types, package.json files, and .releaserc.jsonc generated; individual components built; html-data.json updated.');
   } catch (e) {
     console.error('Error generating wrappers/types:', e);
+    process.exit(1);
   }
 };
 
