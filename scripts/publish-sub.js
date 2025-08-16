@@ -1,12 +1,12 @@
-const { execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
+import { execSync } from 'child_process';
+import { readdirSync } from 'fs';
+import { join } from 'path';
 
-const distDir = path.join(__dirname, '..', 'dist');
+const distDir = join(__dirname, '..', 'dist');
 
 // Publish root package
-const rootPkgPath = path.join(distDir, 'package.json');
-if (fs.existsSync(rootPkgPath)) {
+const rootPkgPath = join(distDir, 'package.json');
+if (readdirSync(distDir, { withFileTypes: true }).some(f => f.name === 'package.json')) {
   console.log(`Publishing ${distDir}`);
   execSync(`npm publish --access public`, { cwd: distDir, stdio: 'inherit' });
 } else {
@@ -15,12 +15,12 @@ if (fs.existsSync(rootPkgPath)) {
 }
 
 // Publish sub-component packages
-const folders = fs.readdirSync(distDir, { withFileTypes: true });
+const folders = readdirSync(distDir, { withFileTypes: true });
 for (const folder of folders) {
   if (!folder.isDirectory()) continue;
-  const pkgDir = path.join(distDir, folder.name);
-  const pkgPath = path.join(pkgDir, 'package.json');
-  if (fs.existsSync(pkgPath)) {
+  const pkgDir = join(distDir, folder.name);
+  const pkgPath = join(pkgDir, 'package.json');
+  if (readdirSync(pkgDir, { withFileTypes: true }).some(f => f.name === 'package.json')) {
     console.log(`Publishing ${pkgDir}`);
     execSync(`npm publish --access public`, { cwd: pkgDir, stdio: 'inherit' });
   }
