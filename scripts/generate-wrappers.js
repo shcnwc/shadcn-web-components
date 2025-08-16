@@ -247,12 +247,6 @@ const generateReleaseConfig = async (components) => {
           changelogTitle: '# Changelog\n\nAll notable changes to this project will be documented in this file.'
         }
       ],
-      [
-        '@semantic-release/exec',
-        {
-          prepareCmd: `node scripts/set-versions.js \${nextRelease.version} && npm run build`
-        }
-      ],
       ...npmPlugins,
       [
         '@semantic-release/git',
