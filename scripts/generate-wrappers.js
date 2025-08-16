@@ -15,7 +15,7 @@ const outputDir = join(__dirname, '..', 'src', 'lib');
 const manifestPath = join(__dirname, '..', 'component-props.json');
 const htmlDataPath = join(__dirname, '..', 'src', 'html-data.json');
 const rootPackageDir = join(__dirname, '..', 'dist', 'shadcn-web-components');
-const releaseConfigPath = join(__dirname, '..', '.releaserc.jsonc');
+const releaseConfigPath = join(__dirname, '..', '.releaserc.json');
 
 const toKebabCase = (str) => str.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
 const toPascalCase = (str) => str.split('-').map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join('');
@@ -324,7 +324,16 @@ const generateWrappers = async () => {
     console.log('Components in manifest:', [...allowedSet]);
     await fsp.rm(outputDir, { recursive: true, force: true });
     await fsp.mkdir(outputDir, { recursive: true });
-    await fsp.copyFile(utilsSrcPath, utilsDestPath);
+    
+    // Check if utils.ts exists before copying
+    try {
+      await fsp.access(utilsSrcPath);
+      await fsp.copyFile(utilsSrcPath, utilsDestPath);
+      console.log('Copied utils.ts to src/lib/utils.ts');
+    } catch (e) {
+      console.warn(`Warning: Could not copy ${utilsSrcPath} to ${utilsDestPath}. File not found, proceeding without it.`);
+    }
+
     const componentFolders = await fsp.readdir(componentsDir, { withFileTypes: true });
     const components = [];
     const htmlDataTags = [];
