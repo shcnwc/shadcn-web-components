@@ -269,9 +269,6 @@ const generateReleaseConfig = async (components) => {
 
 const generateViteConfig = (componentName, entryPath, outputDir) => ({
   plugins: [
-    customTsConfig({
-        filename: '../tsconfig.json',
-    }),
     svelte({
       compilerOptions: {
         customElement: true
@@ -285,6 +282,9 @@ const generateViteConfig = (componentName, entryPath, outputDir) => ({
         'src/shadcn-svelte/apps/**/*',
         'src/shadcn-svelte/docs/src/lib/registry/examples/**/*'
       ]
+    }),
+     customTsConfig({
+        filename: '../tsconfig.json',
     }),
     tailwindcss(),
   ],
