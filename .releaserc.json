@@ -6,12 +6,21 @@
       {
         "releaseRules": [
           { "type": "chore", "release": false },
+          { "type": "docs", "release": "patch" },
+          { "type": "feat", "release": "minor" },
+          { "type": "fix", "release": "patch" },
           { "message": "/shadcn-svelte/", "release": "patch" }
         ]
       }
     ],
     "@semantic-release/release-notes-generator",
-    "@semantic-release/changelog",
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md",
+        "changelogTitle": "# Changelog\n\nAll notable changes to this project will be documented in this file."
+      }
+    ],
     [
       "@semantic-release/exec",
       {
@@ -24,15 +33,21 @@
         "publishCmd": "node scripts/publish-sub.js"
       }
     ],
-    "@semantic-release/npm",
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "dist"
+      }
+    ],
     [
       "@semantic-release/git",
       {
         "assets": [
-          "package.json",
-          "src/lib/*/package.json",
+          "dist/package.json",
+          "dist/*/package.json",
           "CHANGELOG.md"
-        ]
+        ],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
     ]
   ]
