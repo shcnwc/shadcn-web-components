@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.1.0](https://github.com/shcnwc/shadcn-web-components/compare/v1.0.0...v1.1.0) (2025-08-16)
+
+
+### Features
+
+* setup dist folder clean after semantic release ([3ccfb65](https://github.com/shcnwc/shadcn-web-components/commit/3ccfb65f9b071f0e1e4402ca4fcf88b7e5b20858))
+
 # 1.0.0 (2025-08-16)
 
 
