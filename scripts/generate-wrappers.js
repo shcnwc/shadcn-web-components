@@ -274,6 +274,7 @@ const generateViteConfig = (componentName, entryPath, outputDir) => ({
       compilerOptions: {
         customElement: true
       },
+      configFile: join(__dirname, '..', 'tsconfig.json'), 
       include: [
         'src/**/*.svelte',
         'src/shadcn-svelte/docs/src/lib/registry/ui/**/*.svelte'
@@ -320,11 +321,13 @@ const generateWrappers = async () => {
   try {
     const manifestRaw = await fsp.readFile(manifestPath, 'utf8');
     const manifest = JSON.parse(manifestRaw);
-    const allowedSet = new Set(Object.keys(manifest));
+    const allowedSet = new Set(
+      Object.keys(manifest).filter(key => /^[a-z-]+(-[a-z-]+)*$/.test(key))
+    );
     console.log('Components in manifest:', [...allowedSet]);
     await fsp.rm(outputDir, { recursive: true, force: true });
     await fsp.mkdir(outputDir, { recursive: true });
-    
+
     // Check if utils.ts exists before copying
     try {
       await fsp.access(utilsSrcPath);
@@ -332,6 +335,13 @@ const generateWrappers = async () => {
       console.log('Copied utils.ts to src/lib/utils.ts');
     } catch (e) {
       console.warn(`Warning: Could not copy ${utilsSrcPath} to ${utilsDestPath}. File not found, proceeding without it.`);
+    }
+
+    try {
+      await fsp.access(componentsDir);
+    } catch (e) {
+      console.error(`Error: Components directory ${componentsDir} not found. Ensure shadcn-svelte submodule is initialized and updated.`);
+      process.exit(1);
     }
 
     const componentFolders = await fsp.readdir(componentsDir, { withFileTypes: true });
