@@ -22,7 +22,6 @@ Thumbs.db
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-src/shadcn-svelte
 dist
 .svelte-kit
 html-data.json
