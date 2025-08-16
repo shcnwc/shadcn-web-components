@@ -1,6 +1,11 @@
 import { execSync } from 'child_process';
 import { readdirSync } from 'fs';
-import { join } from 'path';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+// Get __dirname equivalent for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const distDir = join(__dirname, '..', 'dist');
 
