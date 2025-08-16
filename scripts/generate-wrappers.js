@@ -268,6 +268,9 @@ const generateReleaseConfig = async (components) => {
 
 const generateViteConfig = (componentName, entryPath, outputDir) => ({
   plugins: [
+    customTsConfig({
+        filename: '../tsconfig.json',
+    }),
     svelte({
       compilerOptions: {
         customElement: true
