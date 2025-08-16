@@ -1,0 +1,18 @@
+{
+  "name": "@shcnwc/shadcn-sidebar-menu-action-web-component",
+  "type": "module",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.js.map",
+    "index.d.ts",
+    "html-data.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "dependencies": {},
+  "version": "1.0.0"
+}
