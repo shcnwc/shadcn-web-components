@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 import { build } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import tailwindcss from '@tailwindcss/vite';
-import { visualizer } from 'rollup-plugin-visualizer';
+import tsConfig from '../tsconfig.json' assert { type: 'json' };
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const componentsDir = join(__dirname, '..', 'src', 'shadcn-svelte', 'docs', 'src', 'lib', 'registry', 'ui');
@@ -13,7 +13,6 @@ const utilsSrcPath = join(__dirname, '..', 'src', 'shadcn-svelte', 'docs', 'src'
 const utilsDestPath = join(__dirname, '..', 'src', 'lib', 'utils.ts');
 const outputDir = join(__dirname, '..', 'src', 'lib');
 const manifestPath = join(__dirname, '..', 'component-props.json');
-const htmlDataPath = join(__dirname, '..', 'src', 'html-data.json');
 const rootPackageDir = join(__dirname, '..', 'dist', 'shadcn-web-components');
 const releaseConfigPath = join(__dirname, '..', '.releaserc.json');
 
@@ -274,7 +273,7 @@ const generateViteConfig = (componentName, entryPath, outputDir) => ({
       compilerOptions: {
         customElement: true
       },
-      configFile: join(__dirname, '..', 'tsconfig.json'), 
+      configFile: tsConfig,
       include: [
         'src/**/*.svelte',
         'src/shadcn-svelte/docs/src/lib/registry/ui/**/*.svelte'
@@ -286,7 +285,6 @@ const generateViteConfig = (componentName, entryPath, outputDir) => ({
       ]
     }),
     tailwindcss(),
-    visualizer({ filename: `dist/${componentName}-stats.html`, template: 'treemap' })
   ],
   resolve: {
     alias: {
