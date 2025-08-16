@@ -23,7 +23,6 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 dist
-.svelte-kit
 html-data.json
 src/html-data.json
 src/lib
