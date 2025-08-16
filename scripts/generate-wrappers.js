@@ -5,7 +5,6 @@ import { fileURLToPath } from 'url';
 import { build } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import tailwindcss from '@tailwindcss/vite';
-import tsConfig from '../tsconfig.json' with { type: 'json' };
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const componentsDir = join(__dirname, '..', 'src', 'shadcn-svelte', 'docs', 'src', 'lib', 'registry', 'ui');
@@ -273,7 +272,7 @@ const generateViteConfig = (componentName, entryPath, outputDir) => ({
       compilerOptions: {
         customElement: true
       },
-      configFile: tsConfig,
+      configFile: join(__dirname, '..', 'tsconfig.json'),
       include: [
         'src/**/*.svelte',
         'src/shadcn-svelte/docs/src/lib/registry/ui/**/*.svelte'
