@@ -283,9 +283,6 @@ const generateViteConfig = (componentName, entryPath, outputDir) => ({
         'src/shadcn-svelte/docs/src/lib/registry/examples/**/*'
       ]
     }),
-     customTsConfig({
-        filename: '../tsconfig.json',
-    }),
     tailwindcss(),
   ],
   resolve: {
