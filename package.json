@@ -13,8 +13,7 @@
   },
   "scripts": {
     "dev": "vite dev",
-    "a": "node scripts/generate-wrappers.js && node scripts/generate-readmes.js && node scripts/copy-types.js",
-    "build": "node scripts/generate-readmes.js",
+    "build": "node scripts/generate-wrappers.js && node scripts/generate-readmes.js && node scripts/copy-types.js",
     "setup": "node scripts/setup-vscode.js",
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo ''",
