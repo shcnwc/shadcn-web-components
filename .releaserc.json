@@ -39,12 +39,6 @@
       }
     ],
     [
-      "@semantic-release/exec",
-      {
-        "prepareCmd": "node scripts/set-versions.js ${nextRelease.version} && npm run build"
-      }
-    ],
-    [
       "@semantic-release/npm",
       {
         "pkgRoot": "dist",
@@ -1106,6 +1100,7 @@
         "assets": [
           "dist/package.json",
           "dist/*/package.json",
+          "dist/*/README.md",
           "CHANGELOG.md"
         ],
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"

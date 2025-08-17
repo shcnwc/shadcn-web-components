@@ -182,10 +182,11 @@ const generatePackageJson = async (componentName) => {
     type: 'module',
     main: 'index.js',
     types: 'index.d.ts',
-    files: ['index.js', 'index.js.map', 'index.d.ts', 'html-data.json'],
+    files: ['index.js', 'index.js.map', 'index.d.ts', 'html-data.json', 'README.md'],
     publishConfig: { access: 'public' },
     sideEffects: false,
-    dependencies: {}
+    dependencies: {},
+    license: "MIT"
   };
   if (manifestEntry?.dependencies) {
     pkg.dependencies = {
@@ -202,7 +203,7 @@ const generateRootPackageJson = async (components) => {
     type: 'module',
     main: 'index.js',
     types: 'types.d.ts',
-    files: ['index.js', 'index.js.map', 'types.d.ts', 'html-data.json'],
+    files: ['index.js', 'index.js.map', 'types.d.ts', 'html-data.json', '**/*'],
     publishConfig: { access: 'public' },
     sideEffects: false,
     dependencies: Object.fromEntries(
@@ -254,6 +255,7 @@ const generateReleaseConfig = async (components) => {
           assets: [
             'dist/package.json',
             'dist/*/package.json',
+            'dist/*/README.md',
             'CHANGELOG.md'
           ],
           message: 'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}'
