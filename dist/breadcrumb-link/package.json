@@ -15,5 +15,6 @@
   },
   "sideEffects": false,
   "dependencies": {},
-  "license": "MIT"
+  "license": "MIT",
+  "version": "1.3.1"
 }

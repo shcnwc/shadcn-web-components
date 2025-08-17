@@ -146,5 +146,6 @@
     "@shcnwc/shadcn-toggle-web-component": "*",
     "@shcnwc/shadcn-toggle-group-web-component": "*",
     "@shcnwc/shadcn-toggle-group-item-web-component": "*"
-  }
+  },
+  "version": "1.3.1"
 }

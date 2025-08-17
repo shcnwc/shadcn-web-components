@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.1](https://github.com/shcnwc/shadcn-web-components/compare/v1.3.0...v1.3.1) (2025-08-17)
+
+
+### Bug Fixes
+
+* fix release ([fe66c9c](https://github.com/shcnwc/shadcn-web-components/commit/fe66c9c17ac7f888c3b40960e697018666e143e8))
+
 # [1.3.0](https://github.com/shcnwc/shadcn-web-components/compare/v1.2.0...v1.3.0) (2025-08-17)
 
 
