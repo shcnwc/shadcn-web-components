@@ -5,31 +5,31 @@ A library of framework-agnostic web components built from [shadcn-svelte](https:
 ## Features
 
 - **Framework-Agnostic**: Components are compiled as standard web components, usable in any JavaScript framework (React, Vue, Angular, vanilla JS, etc.).
-- **Individual Packages**: Each component is published as a separate npm package (`@shadcn-web-components/<component>`) for modular usage.
-- **Root Package**: Import all components via `@shadcn-web-components/all`.
+- **Individual Packages**: Each component is published as a separate npm package (`@shcnwc/shadcn-<component>-web-component`) for modular usage.
+- **Root Package**: Import all components via `@shcnwc/shadcn-web-components`. This package depends on and re-exports from all individual component packages, allowing installation of everything at once while keeping the main package lightweight.
 - **TypeScript Support**: Includes TypeScript definitions (`index.d.ts`) for each component.
 - **VS Code Integration**: Generate `html-data.json` for autocompletion and IntelliSense in Visual Studio Code.
 - **Customizable**: Built with Tailwind CSS and `bits-ui` for flexible styling and behavior.
-- **Automated Builds**: Uses Vite and Rollup to generate self-contained bundles with no shared chunks.
+- **Automated Builds**: Uses Vite to generate self-contained bundles with no shared chunks.
 
 ## Installation
 
 To use a specific component, install it via npm:
 
 ```bash
-npm install @shadcn-web-components/<component-name>
+npm install @shcnwc/shadcn-<component-name>-web-component
 ```
 
 For example, to install the `button` component:
 
 ```bash
-npm install @shadcn-web-components/button
+npm install @shcnwc/shadcn-button-web-component
 ```
 
 To use all components:
 
 ```bash
-npm install @shadcn-web-components/all
+npm install @shcnwc/shadcn-web-components
 ```
 
 ## Usage
@@ -43,7 +43,7 @@ Each component is a custom element that can be used in HTML or JavaScript.
 <shadcn-button variant="primary" onclick="alert('Clicked!')">Click Me</shadcn-button>
 
 <script type="module">
-  import '@shadcn-web-components/button';
+  import '@shcnwc/shadcn-button-web-component';
 </script>
 ```
 
@@ -51,7 +51,7 @@ For the root package:
 
 ```html
 <script type="module">
-  import '@shadcn-web-components/all';
+  import '@shcnwc/shadcn-web-components';
 </script>
 
 <shadcn-button variant="primary">Click Me</shadcn-button>
@@ -74,7 +74,7 @@ To enable autocompletion and IntelliSense for `shadcn-*` custom elements in VS C
 1. Build the project to generate `dist/html-data.json`:
 
    ```bash
-   npm run build
+   node scripts/generate-wrappers.js
    ```
 
 2. Run the setup script to configure VS Code:
@@ -127,13 +127,34 @@ To enable autocompletion and IntelliSense for `shadcn-*` custom elements in VS C
 
 The build process generates individual component packages in `dist/<component-name>` and the root package in `dist`.
 
+To generate wrappers, types, and build components:
+
+```bash
+node scripts/generate-wrappers.js
+```
+
+To generate README files:
+
 ```bash
 npm run build
 ```
 
+To copy additional types (if needed):
+
+```bash
+node scripts/copy-types.js
+```
+
+For a full build sequence:
+
+```bash
+npm run a
+```
+
 This runs:
 - `scripts/generate-wrappers.js`: Generates component files, TypeScript definitions, and `html-data.json`, and builds each component individually using Vite.
-- `scripts/copy-types.js`: Copies `package.json`, `index.d.ts`, and `html-data.json` to `dist`.
+- `scripts/generate-readmes.js`: Generates README files for components and root.
+- `scripts/copy-types.js`: Copies `package.json`, `index.d.ts`, and `html-data.json` to `dist` folders.
 
 The output includes:
 - `dist/<component-name>/index.js`: Compiled web component.
@@ -141,16 +162,14 @@ The output includes:
 - `dist/<component-name>/index.d.ts`: TypeScript definitions.
 - `dist/<component-name>/html-data.json`: Custom element metadata.
 - `dist/<component-name>/package.json`: npm package configuration.
-- `dist/package.json`, `dist/index.js`, `dist/types.d.ts`, `dist/html-data.json`: Root package (`@shadcn-web-components/all`).
-
-### Bundle Analysis
-
-To analyze bundle sizes and dependencies, the build generates `dist/<component-name>-stats.html` files (using `rollup-plugin-visualizer`). Open these in a browser to inspect what’s included in each component’s bundle, especially for large components like `drawer` (~1 MB due to `vaul-svelte`).
+- `dist/<component-name>/README.md`: Component-specific documentation.
+- `dist/package.json`, `dist/index.js`, `dist/types.d.ts`, `dist/html-data.json`, `dist/README.md`: Root package (`@shcnwc/shadcn-web-components`).
 
 ### Scripts
 
 - `npm run dev`: Start the development server (uses `vite.config.ts`).
-- `npm run build`: Build all components and the root package.
+- `npm run a`: Full build (wrappers, READMEs, copy types).
+- `npm run build`: Generate READMEs only.
 - `npm run setup`: Configure VS Code for custom element autocompletion.
 - `npm run preview`: Preview the built components.
 - `npm run check`: Run Svelte type checking.
@@ -160,23 +179,17 @@ To analyze bundle sizes and dependencies, the build generates `dist/<component-n
 
 The project uses `semantic-release` to publish packages to npm. Ensure `NPM_TOKEN` and `GH_TOKEN` are set in your CI environment (e.g., GitHub Actions).
 
-To manually publish a component for testing:
+To manually publish all packages for testing:
 
 ```bash
-cd dist/<component-name>
-npm publish --access public
+node scripts/publish-sub.js
 ```
 
-To publish the root package:
-
-```bash
-cd dist
-npm publish --access public
-```
+This publishes the root package and all sub-component packages.
 
 ## Troubleshooting
 
-- **Large Bundle Sizes**: Components like `drawer` may have large bundles (~1 MB) due to dependencies like `vaul-svelte`. Check `dist/<component-name>-stats.html` for details. To optimize, ensure `sideEffects: false` is set in `package.json` files and verify tree-shaking in Vite.
+- **Large Bundle Sizes**: Components like `drawer` may have large bundles (~1 MB) due to dependencies like `vaul-svelte`. Ensure `sideEffects: false` is set in `package.json` files and verify tree-shaking in Vite.
 - **Missing Components**: If components listed in `component-props.json` are not built, check the build log for `Skipping component` messages. Ensure corresponding `.svelte` files exist in `src/shadcn-svelte/docs/src/lib/registry/ui`.
 - **Svelte Warnings**: If warnings about `...restProps` appear, verify that `<svelte:options customElement>` includes all props from `component-props.json`. The build script automatically injects these props.
 - **VS Code Autocompletion**: If autocompletion doesn’t work, ensure `.vscode/settings.json` includes `"html.customData": ["./html-data.json"]` and that `dist/html-data.json` was generated.
