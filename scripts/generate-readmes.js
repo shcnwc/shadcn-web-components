@@ -142,7 +142,7 @@ ${generateBadges(packageName, version)}
 
 ## Components
 
-${components.map(c => `- [${c.title || c.name}](dist/${c.name}) - ${c.description || 'A web component for ' + c.name + '.'}`).join('\n')}
+${components.map(c => `- [${c.title || c.name}](https://www.npmjs.com/package/@shcnwc/shadcn-${c.name}-web-component) - ${c.description || 'A web component for ' + c.name + '.'}`).join('\n')}
 
 ## Installation
 

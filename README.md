@@ -12,6 +12,56 @@ A library of framework-agnostic web components built from [shadcn-svelte](https:
 - **Customizable**: Built with Tailwind CSS and `bits-ui` for flexible styling and behavior.
 - **Automated Builds**: Uses Vite to generate self-contained bundles with no shared chunks.
 
+## Components
+
+- [Accordion](https://www.npmjs.com/package/@shcnwc/shadcn-accordion-web-component) - A vertically stacked set of interactive headings that each reveal a section of content.
+- [Alert Dialog](https://www.npmjs.com/package/@shcnwc/shadcn-alert-dialog-web-component) - A modal dialog that interrupts the user with important content and expects a response.
+- [Alert](https://www.npmjs.com/package/@shcnwc/shadcn-alert-web-component) - Displays a callout for user attention.
+- [Aspect Ratio](https://www.npmjs.com/package/@shcnwc/shadcn-aspect-ratio-web-component) - Displays content within a desired ratio.
+- [Avatar](https://www.npmjs.com/package/@shcnwc/shadcn-avatar-web-component) - An image element with a fallback for representing the user.
+- [Badge](https://www.npmjs.com/package/@shcnwc/shadcn-badge-web-component) - Displays a badge or a component that looks like a badge.
+- [Breadcrumb](https://www.npmjs.com/package/@shcnwc/shadcn-breadcrumb-web-component) - Displays the path to the current resource using a hierarchy of links.
+- [Button](https://www.npmjs.com/package/@shcnwc/shadcn-button-web-component) - Displays a button or a component that looks like a button.
+- [Calendar](https://www.npmjs.com/package/@shcnwc/shadcn-calendar-web-component) - A calendar component that allows users to select dates.
+- [Card](https://www.npmjs.com/package/@shcnwc/shadcn-card-web-component) - Displays a card with header, content, and footer.
+- [Carousel](https://www.npmjs.com/package/@shcnwc/shadcn-carousel-web-component) - A carousel with motion and swipe built using Embla.
+- [Chart](https://www.npmjs.com/package/@shcnwc/shadcn-chart-web-component) - Beautiful charts. Built using LayerChart. Copy and paste into your apps.
+- [Checkbox](https://www.npmjs.com/package/@shcnwc/shadcn-checkbox-web-component) - A control that allows the user to toggle between checked and not checked.
+- [Collapsible](https://www.npmjs.com/package/@shcnwc/shadcn-collapsible-web-component) - An interactive component which expands/collapses a panel.
+- [Combobox](https://www.npmjs.com/package/@shcnwc/shadcn-combobox-web-component) - Autocomplete input and command palette with a list of suggestions.
+- [Command](https://www.npmjs.com/package/@shcnwc/shadcn-command-web-component) - Fast, composable, unstyled command menu for Svelte.
+- [Context Menu](https://www.npmjs.com/package/@shcnwc/shadcn-context-menu-web-component) - Displays a menu to the user — such as a set of actions or functions — triggered by right click.
+- [Data Table](https://www.npmjs.com/package/@shcnwc/shadcn-data-table-web-component) - Powerful table and datagrids built using TanStack Table.
+- [Date Picker](https://www.npmjs.com/package/@shcnwc/shadcn-date-picker-web-component) - A date picker component with range and presets.
+- [Dialog](https://www.npmjs.com/package/@shcnwc/shadcn-dialog-web-component) - A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.
+- [Drawer](https://www.npmjs.com/package/@shcnwc/shadcn-drawer-web-component) - A drawer component for Svelte.
+- [Dropdown Menu](https://www.npmjs.com/package/@shcnwc/shadcn-dropdown-menu-web-component) - Displays a menu to the user — such as a set of actions or functions — triggered by a button.
+- [Hover Card](https://www.npmjs.com/package/@shcnwc/shadcn-hover-card-web-component) - For sighted users to preview content available behind a link.
+- [Input OTP](https://www.npmjs.com/package/@shcnwc/shadcn-input-otp-web-component) - Accessible one-time password component with copy paste functionality.
+- [Input](https://www.npmjs.com/package/@shcnwc/shadcn-input-web-component) - Displays a form input field or a component that looks like an input field.
+- [Label](https://www.npmjs.com/package/@shcnwc/shadcn-label-web-component) - Renders an accessible label associated with controls.
+- [Menubar](https://www.npmjs.com/package/@shcnwc/shadcn-menubar-web-component) - A visually persistent menu common in desktop applications that provides quick access to a consistent set of commands.
+- [Navigation Menu](https://www.npmjs.com/package/@shcnwc/shadcn-navigation-menu-web-component) - A collection of links for navigating websites.
+- [Pagination](https://www.npmjs.com/package/@shcnwc/shadcn-pagination-web-component) - Pagination with page navigation, next and previous links.
+- [Popover](https://www.npmjs.com/package/@shcnwc/shadcn-popover-web-component) - Displays rich content in a portal, triggered by a button.
+- [Progress](https://www.npmjs.com/package/@shcnwc/shadcn-progress-web-component) - Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.
+- [Radio Group](https://www.npmjs.com/package/@shcnwc/shadcn-radio-group-web-component) - A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time.
+- [Range Calendar](https://www.npmjs.com/package/@shcnwc/shadcn-range-calendar-web-component) - A calendar component that allows users to select a range of dates.
+- [Scroll Area](https://www.npmjs.com/package/@shcnwc/shadcn-scroll-area-web-component) - Augments native scroll functionality for custom, cross-browser styling.
+- [Select](https://www.npmjs.com/package/@shcnwc/shadcn-select-web-component) - Displays a list of options for the user to pick from—triggered by a button.
+- [Separator](https://www.npmjs.com/package/@shcnwc/shadcn-separator-web-component) - Visually or semantically separates content.
+- [Sheet](https://www.npmjs.com/package/@shcnwc/shadcn-sheet-web-component) - Extends the Dialog component to display content that complements the main content of the screen.
+- [Sidebar](https://www.npmjs.com/package/@shcnwc/shadcn-sidebar-web-component) - A composable, themeable and customizable sidebar component.
+- [Skeleton](https://www.npmjs.com/package/@shcnwc/shadcn-skeleton-web-component) - Use to show a placeholder while content is loading.
+- [Slider](https://www.npmjs.com/package/@shcnwc/shadcn-slider-web-component) - An input where the user selects a value from within a given range.
+- [Switch](https://www.npmjs.com/package/@shcnwc/shadcn-switch-web-component) - A control that allows the user to toggle between checked and not checked.
+- [Table](https://www.npmjs.com/package/@shcnwc/shadcn-table-web-component) - A responsive table component.
+- [Tabs](https://www.npmjs.com/package/@shcnwc/shadcn-tabs-web-component) - A set of layered sections of content—known as tab panels—that are displayed one at a time.
+- [Textarea](https://www.npmjs.com/package/@shcnwc/shadcn-textarea-web-component) - Displays a form textarea or a component that looks like a textarea.
+- [Toggle Group](https://www.npmjs.com/package/@shcnwc/shadcn-toggle-group-web-component) - A set of two-state buttons that can be toggled on or off.
+- [Toggle](https://www.npmjs.com/package/@shcnwc/shadcn-toggle-web-component) - A two-state button that can be either on or off.
+- [Tooltip](https://www.npmjs.com/package/@shcnwc/shadcn-tooltip-web-component) - A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.
+
 ## Installation
 
 To use a specific component, install it via npm:
