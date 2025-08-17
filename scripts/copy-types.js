@@ -1,9 +1,7 @@
 import { promises as fsp } from 'fs';
 import { join } from 'path';
-
 const componentsDir = join(process.cwd(), 'src', 'lib');
 const distDir = join(process.cwd(), 'dist');
-
 const prepareDist = async () => {
   const folders = await fsp.readdir(componentsDir, { withFileTypes: true });
   for (const folder of folders) {
@@ -19,13 +17,15 @@ const prepareDist = async () => {
         await fsp.copyFile(srcFile, distFile);
       } catch {}
     }
+    const licenseSrc = join(process.cwd(), 'LICENSE');
+    const licenseDest = join(distFolder, 'LICENSE');
+    try {
+      await fsp.copyFile(licenseSrc, licenseDest);
+    } catch {}
   }
-
   await fsp.rm(join(distDir, 'chunks'), { recursive: true, force: true });
-
   try {
     await fsp.copyFile(join(process.cwd(), 'src', 'html-data.json'), join(distDir, 'html-data.json'));
   } catch {}
 };
-
 prepareDist();

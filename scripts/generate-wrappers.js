@@ -5,7 +5,6 @@ import { fileURLToPath } from 'url';
 import { build } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import tailwindcss from '@tailwindcss/vite';
-import customTsConfig from 'vite-plugin-custom-tsconfig';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const componentsDir = join(__dirname, '..', 'src', 'shadcn-svelte', 'docs', 'src', 'lib', 'registry', 'ui');
@@ -20,7 +19,6 @@ const targetSvelteKitTsConfigPath = join(__dirname, '..', 'src', 'shadcn-svelte'
 
 const toKebabCase = (str) => str.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
 const toPascalCase = (str) => str.split('-').map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join('');
-const toInterfaceName = (tag) => toPascalCase(tag.replace(/^shadcn-/, '')) + 'Attributes';
 
 const mapTs = (prop) => {
   if (!prop) return 'string';

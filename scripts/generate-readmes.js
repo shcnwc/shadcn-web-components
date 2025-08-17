@@ -198,10 +198,10 @@ const generateReadmes = async () => {
       }
       const docPath = join(docsDir, folder.name);
       const content = await fsp.readFile(docPath, 'utf8');
-      console.log('content :>> ', content);
+
       const frontmatter = parseFrontmatter(content);
       const usage = extractUsage(content);
-      console.log('usage :>> ', usage);
+      
       const readmeContent = await generateComponentReadme(componentName, frontmatter, usage);
       const outDir = join(distDir, kebabName);
       await fsp.mkdir(outDir, { recursive: true });

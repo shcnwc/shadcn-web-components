@@ -39,12 +39,11 @@ npm install @shcnwc/shadcn-web-components
 Each component is a custom element that can be used in HTML or JavaScript.
 
 ```html
-<!-- Using the button component -->
-<shadcn-button variant="primary" onclick="alert('Clicked!')">Click Me</shadcn-button>
-
 <script type="module">
   import '@shcnwc/shadcn-button-web-component';
 </script>
+
+<shadcn-button variant="primary" onclick="alert('Clicked!')">Click Me</shadcn-button>
 ```
 
 For the root package:
@@ -127,28 +126,22 @@ To enable autocompletion and IntelliSense for `shadcn-*` custom elements in VS C
 
 The build process generates individual component packages in `dist/<component-name>` and the root package in `dist`.
 
+For a full build sequence:
+
+```bash
+npm run build
+```
+
 To generate wrappers, types, and build components:
 
 ```bash
 node scripts/generate-wrappers.js
 ```
 
-To generate README files:
-
-```bash
-npm run build
-```
-
 To copy additional types (if needed):
 
 ```bash
 node scripts/copy-types.js
-```
-
-For a full build sequence:
-
-```bash
-npm run a
 ```
 
 This runs:
@@ -167,13 +160,8 @@ The output includes:
 
 ### Scripts
 
-- `npm run dev`: Start the development server (uses `vite.config.ts`).
-- `npm run a`: Full build (wrappers, READMEs, copy types).
-- `npm run build`: Generate READMEs only.
+- `npm run build`: Full build (wrappers, READMEs, copy types).
 - `npm run setup`: Configure VS Code for custom element autocompletion.
-- `npm run preview`: Preview the built components.
-- `npm run check`: Run Svelte type checking.
-- `npm run lint`: Run ESLint.
 
 ### Publishing
 

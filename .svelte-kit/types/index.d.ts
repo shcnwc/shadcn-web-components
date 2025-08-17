@@ -16,4 +16,4 @@ export type Pathname = "/";
 
 export type ResolvedPathname = `${"" | `/${string}`}${Pathname}`;
 
-export type Asset = "/robots.txt";
+export type Asset = never;
